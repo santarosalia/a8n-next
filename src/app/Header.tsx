@@ -65,8 +65,11 @@ const ResponsiveAppBar = () => {
                 }}
                 >
                 {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <MenuItem key={page}
+                    onClick={handleCloseNavMenu}>
+                        <Link href={`/${page.toLowerCase()}`}>
+                            <Typography textAlign="center">{page}</Typography>
+                        </Link>
                     </MenuItem>
                 ))}
                 </Menu>
@@ -81,6 +84,7 @@ const ResponsiveAppBar = () => {
                 {pages.map((page) => (
                 <Button
                     key={page}
+                    href={`/${page.toLowerCase()}`}
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
