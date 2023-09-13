@@ -1,5 +1,5 @@
 export default () => {
     return (
-        <div>signin</div>
+        <div>signup</div>
     )
 }
