@@ -1,10 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Noto_Sans_KR } from 'next/font/google'
 import Header from './Header';
 import AuthContext from '@/context/AuthContext';
 
-const inter = Inter({ subsets: ['latin'] })
+const notoSansKr = Noto_Sans_KR({ 
+  subsets : ['latin'],
+  weight : ['100','400','700','900'] })
 
 export const metadata: Metadata = {
   title: 'Lunatic Monster',
@@ -22,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html>
+      <body className={notoSansKr.className}>
         <AuthContext>
           <Header/>
           {children}

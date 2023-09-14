@@ -2,6 +2,7 @@
 import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
 import {Adb as AdbIcon, Menu as MenuIcon} from '@mui/icons-material';
+import {usePathname} from 'next/navigation'
 import * as React from 'react';
 import Link from "next/link";
 import HeaderSettings from "@/components/HeaderSettings";
@@ -9,7 +10,8 @@ import HeaderSettings from "@/components/HeaderSettings";
 const pages = ['Products'];
 
 const ResponsiveAppBar = () => {
-
+    const pathname = usePathname();
+    if (pathname === '/signup') return (<></>)
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

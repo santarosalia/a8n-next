@@ -27,10 +27,8 @@ const handler = NextAuth({
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                    //   email: credentials?.email,
-                      email: 'abc',
-                    //   password: credentials?.password,
-                      password: '123',
+                    email: credentials?.email,
+                    password: credentials?.password,
                     }),
                 });
                 const user = await res.json();
@@ -40,16 +38,9 @@ const handler = NextAuth({
                     return null;
                 }
             },
-        })
+            
+        }),
     ],
-    // callbacks : {
-    //     async signIn({user, profile, account}) {
-    //         console.log(user)
-    //         console.log(profile)
-    //         console.log(account)
-    //         return true
-    //     }
-    // }
 });
 
 export {handler as GET, handler as POST}

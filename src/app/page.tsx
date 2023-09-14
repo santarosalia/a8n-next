@@ -5,9 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default () => {
   return (
     <Container maxWidth='xl'>
-      <Button onClick={()=>{signIn('credentials')}}>
-        signin cre
-      </Button>
+      Home
     </Container>
   
   
