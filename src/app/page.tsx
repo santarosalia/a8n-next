@@ -1,8 +1,13 @@
-import {Container} from '@mui/material';
+'use client'
+import {Button, Container} from '@mui/material';
+import { signIn, signOut, useSession } from "next-auth/react";
+
 export default () => {
   return (
     <Container maxWidth='xl'>
-      여기는 홈
+      <Button onClick={()=>{signIn('credentials')}}>
+        signin cre
+      </Button>
     </Container>
   
   
