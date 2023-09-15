@@ -2,15 +2,15 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/app/lib/prisma";
 
 const handler = NextAuth({
+    adapter : PrismaAdapter(prisma),
     providers : [
         GoogleProvider({
             clientId : process.env.GOOGLE_CLIENT_ID ?? '',
             clientSecret : process.env.GOOGLE_CLIENT_SECRET ?? ''
         }),
-        
         CredentialProvider({
             name : 'Credentials',
             credentials : {
@@ -38,6 +38,10 @@ const handler = NextAuth({
             
         }),
     ],
+    session : {
+        strategy : "jwt",
+        maxAge : 10 * 60 * 60,
+    },
     callbacks : {
         async jwt({token, user}) {
             return {...token, ...user};
@@ -46,7 +50,6 @@ const handler = NextAuth({
             session.user = token;
             return session;
         }
-        
     }
 });
 
