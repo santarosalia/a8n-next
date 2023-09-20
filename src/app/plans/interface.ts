@@ -7,5 +7,6 @@ export interface Plan {
     buttonText: string,
     price?: string,
     href: string,
+    img: string,
     children?: ReactNode
 }

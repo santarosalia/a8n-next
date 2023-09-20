@@ -9,7 +9,8 @@ export const plans: Plan[] = [
             'Save 5 processes'
         ],
         buttonText : 'Try for free',
-        href : 'https://naver.com'
+        href : 'https://naver.com',
+        img : '/free.png'
     },
     {
         title : 'Unlimited',
@@ -21,7 +22,8 @@ export const plans: Plan[] = [
         ],
         buttonText : 'Get Started',
         href : 'https://naver.com',
-        price : '1'
+        price : '1',
+        img : '/unlimited.png'
     },
     {
         title : 'Ultimate',
@@ -32,6 +34,7 @@ export const plans: Plan[] = [
         ],
         buttonText : 'Get Started',
         href : 'https://naver.com',
-        price : '3'
+        price : '3',
+        img : '/ultimate.png'
     }
 ]

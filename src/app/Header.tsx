@@ -26,7 +26,7 @@ const ResponsiveAppBar = () => {
     
 
     return (
-        <AppBar position="static" sx={{backgroundColor : 'black'}} variant="elevation">
+        <AppBar position="sticky" sx={{backgroundColor : 'black'}} variant="elevation">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Box component='a' href="/" sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}>

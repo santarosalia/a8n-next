@@ -74,23 +74,23 @@ export default () => {
     return (
         <>
         <Button onClick={() => {setOpenSignInModal(true)}} color="inherit">
-            로그인
+            Signin
         </Button>
         <Dialog open={openSignInModal} onClose={() => {setOpenSignInModal(false)}}>
             <DialogContent>
                 <Box>
-                    <InputLabel htmlFor="email" size="normal">이메일</InputLabel>
+                    <InputLabel htmlFor="email" size="normal">Email</InputLabel>
                     <TextField id="email" size="small" required value={email} type={"email"} onChange={onChange}></TextField>
-                    <InputLabel htmlFor="password">비밀번호</InputLabel>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <TextField id="password" size="small" required value={password} type={"password"} onChange={onChange}></TextField>
                 </Box>
                 <Box>
-                    <Button fullWidth color="inherit" onClick={signInWithCredentials}>로그인</Button>
-                    <Button fullWidth color="info" href="/signup">회원가입</Button>
+                    <Button fullWidth color="inherit" onClick={signInWithCredentials}>Signin</Button>
+                    <Button fullWidth color="info" href="/signup">Signup</Button>
                 </Box>
-                <Divider><Chip label="소셜 로그인"></Chip></Divider>
+                <Divider><Chip label="or"></Chip></Divider>
                 <Box>
-                    <Button fullWidth onClick={() => signIn('google')}>Google</Button>
+                    <Button fullWidth onClick={() => signIn('google')}>Sign with Google</Button>
                 </Box>
             </DialogContent>
         </Dialog>

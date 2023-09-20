@@ -13,6 +13,7 @@ export default () => {
                 buttonText={plan.buttonText}
                 href={plan.href}
                 price={plan.price}
+                img={plan.img}
                 >
                 </Plan>
             )
