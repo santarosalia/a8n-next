@@ -1,28 +1,16 @@
 import { CheckCircle } from '@mui/icons-material';
 import {Box, Button, Container, Icon, List, ListItem, Paper, Typography} from '@mui/material';
-import Plan from './Plan';
+import PlansMd from './PlansMd';
+import PlansXs from './PlansXs';
 export default () => {
   return (
     <Container maxWidth='lg'>
-      <Box margin={10} textAlign={'center'}>
-        <Typography variant='h3'>
-          Pick the plan that's right for you
-        </Typography>
+      <Box display={{xs:'none', md :'flex'}} flexDirection={'column'}>
+      <PlansMd></PlansMd>
       </Box>
-      <Box display={'flex'} textAlign={'center'} justifyContent={'center'} sx={{display : {xs : 'none', md : 'flex'}}}>
-        <Plan 
-        title='Free'
-        subtitle='Recording and execute process'
-        access={[
-          'Recording process',
-          'Execute process'
-        ]}
-        buttonText='Get Started'
-        ></Plan>
-        
+      <Box display={{xs:'flex', md :'none'}} flexDirection={'column'}>
+      <PlansXs></PlansXs>
       </Box>
     </Container>
-  
-  
   )
 }
