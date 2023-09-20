@@ -27,8 +27,7 @@ export default () => {
                 >
                 </Box>
                 <Button 
-                href={''}
-                target="_blank"
+                href={'/plans'}
                 className="bg-green-100" 
                 size="large"  
                 variant="contained" 

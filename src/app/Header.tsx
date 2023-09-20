@@ -7,7 +7,7 @@ import * as React from 'react';
 import Link from "next/link";
 import HeaderSettings from "@/components/HeaderSettings";
 
-const pages = ['Plans'];
+const pages = ['Plans','Usage','Board'];
 
 const ResponsiveAppBar = () => {
     const pathname = usePathname();
