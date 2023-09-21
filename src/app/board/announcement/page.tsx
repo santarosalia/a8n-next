@@ -6,9 +6,6 @@ export default () => {
         PROCESS,
         
     }
-    interface Comment {
-        content: string
-    }
     interface Board {
         index: number,
         id: string
@@ -25,7 +22,7 @@ export default () => {
         commentCount: number,
         recommendation: number
     }
-
+    
     const boards: Board[] = [];
     for (let i = 0; i < 9; i++) {
         boards.push(
@@ -65,8 +62,8 @@ export default () => {
                     <Box>
                         <Chip
                         label={board.category}
-                        size="small">
-                        </Chip>
+                        size="small"/>
+                        
                         {board.hashtag}
                         {board.readCount}
                         {board.commentCount}
@@ -78,6 +75,7 @@ export default () => {
             </>
         )
     });
+
     return (
         <>
         
