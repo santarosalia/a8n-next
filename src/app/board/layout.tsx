@@ -1,6 +1,5 @@
 'use client'
-import { ClassNames } from "@emotion/react"
-import { Box, Container, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material"
+import { Box, Container, Divider, List, ListItem, ListItemButton, ThemeProvider, Typography } from "@mui/material"
 import { grey, purple } from "@mui/material/colors"
 import Link from "next/link"
 import { ReactNode, useState } from "react"
@@ -12,15 +11,49 @@ export default ({children} :
 
     return (
         <>
-        <ThemeProvider theme={listItem}>
         <Container maxWidth='xl'>
             <Box
             marginY={1}
-            marginX={10}
-            padding={3} 
+            sx={{
+                display : {
+                    xs : 'flex',
+                    md : 'none'
+                }
+            }}
+            >
+                <ThemeProvider theme={listItem}>
+                <List sx={{
+                    display : 'flex'
+                }}>
+                    <Link href={'/board/announcement'}>
+                        <ListItemButton
+                        selected={selected === 0}
+                        onClick={()=>setSelected(0)}
+                        >
+                            Announcement
+                        </ListItemButton>
+                    </Link>
+                    <Link href={'/board/share'}>
+                        <ListItemButton
+                        selected={selected === 1}
+                        onClick={()=>setSelected(1)}
+                        >
+                            Share
+                        </ListItemButton>
+                    </Link>
+                </List>
+                </ThemeProvider>
+
+            </Box>
+            <Box
+            marginY={1}
+            marginX={'auto'}
+            padding={3}
+            
             flexDirection={'column'}
-            height={'20vh'}
+            height={'60px'}
             display={'flex'}
+            width={'60vw'}
             justifyContent={'center'}
             sx={{
                 backgroundColor : grey[300],
@@ -37,13 +70,14 @@ export default ({children} :
             </Box>
             <Box display={'flex'}>
                 <Box
-                flex={1}
+                flex={2}
                 sx={{
                     display : {
                         xs : 'none',
                         md : 'flex'
                     }
                 }}>
+                    <ThemeProvider theme={listItem}>
                     <List>
                         <Link href={'/board/announcement'}>
                             <ListItemButton
@@ -62,13 +96,20 @@ export default ({children} :
                             </ListItemButton>
                         </Link>
                     </List>
+                    </ThemeProvider>
                 </Box>
                 <Box flex={9} height={'100vh'} padding={1}>
                     {children}
                 </Box>
+                <Box flex={2}
+                sx={{
+                    display : {
+                        xs : 'none',
+                        md : 'flex'
+                    }
+                }}>ad</Box>
             </Box>
         </Container>
-        </ThemeProvider>
         </>
     )
 }
