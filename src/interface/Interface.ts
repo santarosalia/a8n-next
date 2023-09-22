@@ -12,7 +12,7 @@ export interface Board {
     hashtag: string[],
     readCount: number,
     commentCount: number,
-    recommendation: number
+    recommend: number
 }
 
 export enum Category {

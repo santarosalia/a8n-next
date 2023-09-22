@@ -23,7 +23,7 @@ export default () => {
                 hashtag : [`#hash${i}`,`#hash${i}`],
                 readCount : i,
                 commentCount : i,
-                recommendation : i
+                recommend : i
             }
         );
     }
@@ -94,7 +94,7 @@ export default () => {
                         <Box display={'flex'} marginRight={1}>
                             <ThumbUp fontSize="small"></ThumbUp>
                             <Typography variant="subtitle2">
-                                {board.recommendation}
+                                {board.recommend}
                             </Typography>
                         </Box>
 

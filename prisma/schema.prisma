@@ -49,6 +49,21 @@ model Process {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Board {
+  id  String @id @default(cuid())
+  title String
+  content String
+  userId String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  category Int
+  hashtag String
+  readCount Int @default(0)
+  recommend Int @default(0)
+  user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  
+}
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -62,6 +77,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   processes     Process[]
+  boards        Board[]
 }
 
 model VerificationToken {

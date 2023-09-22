@@ -4,11 +4,11 @@ import { Category } from "@/interface/Interface";
 import { Create } from "@mui/icons-material";
 import { Box, Button, Container, Divider, MenuItem, Select, Skeleton, TextField, Typography } from "@mui/material";
 import dynamic from "next/dynamic"
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import 'react-quill/dist/quill.snow.css';
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr : false
-})
+});
 
 export default () => {
     const modules = {
@@ -21,6 +21,7 @@ export default () => {
             ],
         }
     }
+    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState(1);
     const quillOnChange = (value: string) => {
@@ -60,6 +61,25 @@ export default () => {
             </MenuItem>
         )
     });
+    
+    const createButtonOnClick = async () => {
+        const res = await fetch('/api/board', {
+            method : 'PUT',
+            body : JSON.stringify({
+                title : title,
+                content : content,
+                category : category,
+                hashtag : ['#a','#b'],
+            }),
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        });
+        console.log(res)
+    }
+    const titleOnChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement> ) => {
+        setTitle(e.target.value);
+    }
     return (
         <Container maxWidth='xl'>
             <Box display={'flex'} justifyContent={'center'}>
@@ -85,6 +105,7 @@ export default () => {
                     </Select>
                     <TextField
                     fullWidth
+                    onChange={titleOnChange}
                     sx={{
                         marginBottom : 1
                     }}
@@ -95,7 +116,9 @@ export default () => {
                             File
                         </Box>
                         <Box flex={1} display={'flex'}>
-                            <Button sx={{marginLeft : 'auto'}}>
+                            <Button
+                            sx={{marginLeft : 'auto'}}
+                            onClick={createButtonOnClick}>
                                 <Create fontSize="small"></Create>
                             </Button>
                         </Box>
