@@ -4,7 +4,10 @@ export default () => {
     enum Category {
         ANNOUNCEMNET,
         PROCESS,
-        
+    }
+    const CATEGORY = {
+        0 : 'Announcement',
+        1 : 'Share'
     }
     interface Board {
         index: number,
@@ -16,7 +19,7 @@ export default () => {
         },
         createdAt: Date,
         updatedAt: Date,
-        category: Category,
+        category: string,
         hashtag: string[],
         readCount: number,
         commentCount: number,
@@ -29,15 +32,15 @@ export default () => {
             {
                 index : i,
                 id : `id${i}`,
-                title : `test${i}`,
+                title : `titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle${i}`,
                 profile : {
                     id : `profile id ${i}`,
                     name : `name${i}`
                 },
                 createdAt : new Date(),
                 updatedAt : new Date(),
-                category : Category.PROCESS,
-                hashtag : [`#hash${i}`],
+                category : CATEGORY[Category.PROCESS],
+                hashtag : [`#hash${i}`,`#hash${i}`],
                 readCount : i,
                 commentCount : i,
                 recommendation : i
@@ -45,26 +48,38 @@ export default () => {
         );
     }
     const BoardComponents = boards.map(board => {
+        
         return (
             <>
             <ListItem dense sx={{
-                height:'80px'
+                height:'70px'
             }}>
-                <Box>
-                    <Box>
-                        {board.profile.name} {`${board.createdAt.getFullYear()}-${board.createdAt.getMonth()+1}-${board.createdAt.getDate()} ${board.createdAt.getHours()}:${board.createdAt.getMinutes()}` }
-                    </Box>
-                    <Box>
-                        <Typography variant="h6">
-                            {board.title}
+                <Box width={'100%'}>
+                    <Box display={'flex'} overflow={'auto'} width={'100%'}>
+                        <Typography variant="body2">
+                            {board.profile.name}
+                        </Typography>
+                        <Typography variant="body2" marginLeft={'auto'}>
+                            {`${board.createdAt.getFullYear()}-${board.createdAt.getMonth()+1}-${board.createdAt.getDate()} ${board.createdAt.getHours()}:${board.createdAt.getMinutes()}`}
                         </Typography>
                     </Box>
                     <Box>
+                        <Typography variant="body1" overflow={'hidden'} whiteSpace={'nowrap'} textOverflow={'ellipsis'} sx={{width : {xs : '100vw',md : '100%'}}}>
+                            {board.title}
+                        </Typography>
+                    </Box>
+                    <Box display={'flex'}>
                         <Chip
                         label={board.category}
-                        size="small"/>
+                        size="small"
+                        sx={{
+                            height : '18px',
+                        }}
+                        />
+                        <Typography variant="body2">
+                            {board.hashtag}
+                        </Typography>
                         
-                        {board.hashtag}
                         {board.readCount}
                         {board.commentCount}
                         {board.recommendation}
