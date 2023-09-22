@@ -3,14 +3,18 @@ import { CATEGORY } from "@/constants/Constants";
 import { Category } from "@/interface/Interface";
 import { Create } from "@mui/icons-material";
 import { Box, Button, Container, Divider, MenuItem, Select, Skeleton, TextField, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic"
 import { ChangeEvent, useEffect, useState } from "react";
 import 'react-quill/dist/quill.snow.css';
+import { useRouter } from 'next/navigation'
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr : false
 });
 
 export default () => {
+    const session = useSession();
+    const router = useRouter();
     const modules = {
         toolbar: {
             container: [
@@ -63,19 +67,26 @@ export default () => {
     });
     
     const createButtonOnClick = async () => {
+        console.log(session)
+        
+        const accessToken = session!.data!.user.accessToken;
         const res = await fetch('/api/board', {
             method : 'PUT',
             body : JSON.stringify({
+                userId : session.data?.user.id,
                 title : title,
                 content : content,
                 category : category,
                 hashtag : ['#a','#b'],
             }),
             headers : {
-                "Content-Type" : "application/json"
+                "Content-Type" : "application/json",
+                "Authorization" : accessToken
             }
         });
-        console.log(res)
+        if (res.ok) {
+            router.push('/board');
+        }
     }
     const titleOnChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement> ) => {
         setTitle(e.target.value);
