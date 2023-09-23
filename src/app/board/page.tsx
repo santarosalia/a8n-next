@@ -1,7 +1,5 @@
-'use client'
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation";
 export default () => {
-    const router = useRouter();
-    router.push('/board/1');
+    redirect('/board/1')
     return (<></>)
 }
