@@ -16,7 +16,7 @@ export const PUT = async (req: Request) => {
     const content = body.content;
     const category = body.category;
     const hashtag = '';
-    await prisma.board.create({
+    await prisma.post.create({
         data : {
             userId : userId,
             content : content,

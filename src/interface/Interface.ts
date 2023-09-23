@@ -1,15 +1,15 @@
-export interface Board {
+export interface Post {
     index: number,
     id: string
     title: string,
-    profile: {
+    user: {
         id: string,
         name: string
     },
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: string,
+    updatedAt: string,
     category: string,
-    hashtag: string[],
+    hashtag: string,
     readCount: number,
     commentCount: number,
     recommend: number
