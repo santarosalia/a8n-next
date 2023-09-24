@@ -1,5 +1,5 @@
 'use client'
-import { Box, Button, ButtonGroup, Chip, Divider, List, ListItem, ListItemButton, Pagination, Typography } from "@mui/material"
+import { Box, Button, ButtonGroup, Chip, Divider, List, ListItem, ListItemButton, Pagination, PaginationItem, Typography } from "@mui/material"
 import { Post } from "@/interface/Interface";
 import { CATEGORY } from "@/constants/Constants";
 import { Category } from "@/interface/Interface";
@@ -13,7 +13,7 @@ export default () => {
     const { page } = params;
     const [count, setCount] = useState(0);
     const [posts, setPosts] = useState<Post[]>([]);
-    const fetchPost = async () => {
+    const fetchData = async () => {
         
         const res = await fetch(`/api/board/${page}`, {
             method : 'GET'
@@ -21,37 +21,14 @@ export default () => {
         const result: { count: number, posts: Post[] } = await res.json();
         
         const {count, posts} = result;
-        console.log(count);
-        console.log(posts)
         setCount(count);
         setPosts(posts);
     }
 
     useEffect(() => {
-        fetchPost();
+        fetchData();
     },[]);
     
-    // const posts: Post[] = [];
-    // for (let i = 0; i < 10; i++) {
-    //     posts.push(
-    //         {
-    //             index : i,
-    //             id : `id${i}`,
-    //             title : `titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle${i}`,
-    //             profile : {
-    //                 id : `profile id ${i}`,
-    //                 name : `name${i}`
-    //             },
-    //             createdAt : new Date(),
-    //             updatedAt : new Date(),
-    //             category : CATEGORY[Category.PROCESS],
-    //             hashtag : [`#hash${i}`,`#hash${i}`],
-    //             readCount : i,
-    //             commentCount : i,
-    //             recommend : i
-    //         }
-    //     );
-    // }
     const buttonBox = () => {
         return (
             <Box marginLeft={'auto'}>
@@ -63,19 +40,19 @@ export default () => {
             </Box>
         )
     }
-    const BoardComponents = posts.map(post => {
-        const hashtag = post.hashtag.split(',').map(hash => {
+    const BoardComponents = posts.map((post, i) => {
+        const hashtag = post.hashtag.split(',').map((hash, i) => {
             return (
-                <>
-                    <Typography component={'a'} variant="subtitle2">
-                        {hash}
-                    </Typography>
-                </>
+                <Typography key={i} component={'a'} variant="subtitle2">
+                    {hash}
+                </Typography>
             )
         })
+        const date = new Date(post.createdAt);
+        
         return (
-            <>
-            <ListItem dense sx={{
+            <div key={i}>
+            <ListItem key={i} dense sx={{
                 height:'70px'
             }}>
                 <Box width={'100%'}>
@@ -84,11 +61,10 @@ export default () => {
                             {post.user.name}
                         </Typography>
                         <Typography variant="body2" marginLeft={'auto'}>
-                            {/* {`${post.createdAt.getFullYear()}-${post.createdAt.getMonth()+1}-${post.createdAt.getDate()} ${post.createdAt.getHours()}:${post.createdAt.getMinutes()}`} */}
-                            {post.createdAt}
+                            {`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
                         </Typography>
                     </Box>
-                    <Box>
+                    <Box component={Link} href={`/board/view/${post.id}`}>
                         <Typography variant="body1" overflow={'hidden'} whiteSpace={'nowrap'} textOverflow={'ellipsis'} sx={{width : {xs : '80vw', md : '100%'}}}>
                             {post.title}
                         </Typography>
@@ -129,7 +105,7 @@ export default () => {
                 </Box>
             </ListItem>
             <Divider></Divider>
-            </>
+            </div>
         )
     });
 
@@ -138,11 +114,21 @@ export default () => {
         
         <List>
             <Divider></Divider>
-            {BoardComponents}
+            { BoardComponents }
         </List>
         {buttonBox()}
         <Box display={'flex'} justifyContent={'center'}>
-            <Pagination count={10}></Pagination>
+            <Pagination
+            count={count}
+            page={Number(page)}
+            renderItem={(item) => (
+                <PaginationItem
+                key={item.page}
+                component={Link}
+                href={`/board/${item.page}`}
+                {...item}/>
+                
+            )} ></Pagination>
         </Box>
 
         </>

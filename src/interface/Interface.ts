@@ -2,6 +2,7 @@ export interface Post {
     index: number,
     id: string
     title: string,
+    content: string,
     user: {
         id: string,
         name: string

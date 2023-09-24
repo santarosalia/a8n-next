@@ -1,5 +1,5 @@
 'use client'
-import { Box, Button, Container, Divider, List, ListItem, ListItemButton, MenuItem, Select, SelectChangeEvent, TextField, ThemeProvider, Typography } from "@mui/material"
+import { Box, Button, Container, Divider, List, ListItem, ListItemButton, MenuItem, Pagination, PaginationItem, Select, SelectChangeEvent, TextField, ThemeProvider, Typography } from "@mui/material"
 import { grey, purple } from "@mui/material/colors"
 import { ReactNode, useState } from "react"
 import { listItem } from "@/theme/CommonTheme"
@@ -10,14 +10,17 @@ export default ({children} :
     { children: ReactNode }
 ) => {
     const pathName = usePathname();
-    if (pathName === '/board/write') return (<>{children}</>)
+    if (
+        pathName === '/board/write' ||
+        pathName.startsWith('/board/view/')
+        ) return (<>{children}</>)
     const [selectedCategory, setSelectedCategory] = useState(0);
     
     const searchBoxSelectCategory = Object.entries(CATEGORY).map(entry => {
         const [key, value] = entry;
         return (
             <MenuItem value={key} key={key}>
-            {value}
+                {value}
             </MenuItem>
         )
     });
@@ -36,6 +39,7 @@ export default ({children} :
             <ListItemButton
             selected={selectedCategory === Number(key)}
             onClick={() => onClickCategory(Number(key))}
+            key={key}
             >
                 {value}
             </ListItemButton>
