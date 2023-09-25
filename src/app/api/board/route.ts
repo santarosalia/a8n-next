@@ -6,12 +6,12 @@ export const PUT = async (req: Request) => {
     if (!accessToken || !verifyJwt(accessToken)) {
         return new Response(JSON.stringify({
             error : 'No Authorization'
-        }),{
+        }), {
             status : 401
         });
     }
     const body = await req.json();
-    const userId = 'clmjfhd1f0000r38j78hxbnsd';
+    const userId = body.userId;
     const title = body.title;
     const content = body.content;
     const category = body.category;
@@ -26,7 +26,5 @@ export const PUT = async (req: Request) => {
         }
     });
     
-    return new Response(JSON.stringify({
-        status : 200
-    }));
+    return new Response();
 }

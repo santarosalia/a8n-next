@@ -1,21 +1,22 @@
 'use client'
-import { Box, Button, ButtonGroup, Chip, Divider, List, ListItem, ListItemButton, Pagination, PaginationItem, Typography } from "@mui/material"
+import { Box, ButtonGroup, Chip, Divider, List, ListItem, Pagination, PaginationItem, Typography } from "@mui/material"
 import { Post } from "@/interface/Interface";
 import { CATEGORY } from "@/constants/Constants";
 import { Category } from "@/interface/Interface";
 import { Comment, Create, ThumbUp, Visibility } from "@mui/icons-material";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default () => {
-    const params = useParams();
-    const { page } = params;
+export default ({ params }: { params: { category: string}}) => {
+    const searchParams = useSearchParams();
+    const page = searchParams.get('page');
+    const { category }  = params;
     const [count, setCount] = useState(0);
     const [posts, setPosts] = useState<Post[]>([]);
+    const router = useRouter();
     const fetchData = async () => {
-        
-        const res = await fetch(`/api/board/${page}`, {
+        const res = await fetch(`/api/board/${category}/?page=${page ?? 1}`, {
             method : 'GET'
         });
         const result: { count: number, posts: Post[] } = await res.json();
@@ -27,7 +28,7 @@ export default () => {
 
     useEffect(() => {
         fetchData();
-    },[]);
+    }, [category, page]);
     
     const buttonBox = () => {
         return (
@@ -49,7 +50,7 @@ export default () => {
             )
         })
         const date = new Date(post.createdAt);
-        
+        const category = Number(post.category) as Category;
         return (
             <div key={i}>
             <ListItem key={i} dense sx={{
@@ -64,14 +65,14 @@ export default () => {
                             {`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}
                         </Typography>
                     </Box>
-                    <Box component={Link} href={`/board/view/${post.id}`}>
+                    <Box component={Link} href={`/view/${post.id}`}>
                         <Typography variant="body1" overflow={'hidden'} whiteSpace={'nowrap'} textOverflow={'ellipsis'} sx={{width : {xs : '80vw', md : '100%'}}}>
                             {post.title}
                         </Typography>
                     </Box>
                     <Box display={'flex'}>
                         <Chip
-                        label={post.category}
+                        label={CATEGORY[category]}
                         size="small"
                         sx={{
                             height : '18px',
@@ -108,6 +109,9 @@ export default () => {
             </div>
         )
     });
+    const paginationOnChange = (e: any) => {
+        router.push(`/board/?cat=${category}&page=${e.target.textContent}`)
+    }
 
     return (
         <>
@@ -121,11 +125,12 @@ export default () => {
             <Pagination
             count={count}
             page={Number(page)}
+            // onChange={paginationOnChange}
             renderItem={(item) => (
                 <PaginationItem
-                key={item.page}
                 component={Link}
-                href={`/board/${item.page}`}
+                href={`${category}?page=${item.page}`}
+                key={item.page}
                 {...item}/>
                 
             )} ></Pagination>

@@ -1,5 +1,7 @@
+import { Category } from "@/interface/Interface"
+
 export const CATEGORY = {
-    0 : 'All',
-    1 : 'Announcement',
-    2 : 'Share'
+    [Category.ALL] : 'all',
+    [Category.NOTICE] : 'notice',
+    [Category.SHARE] : 'share'
 }

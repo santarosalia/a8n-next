@@ -18,6 +18,6 @@ export interface Post {
 
 export enum Category {
     ALL,
-    ANNOUNCEMNET,
-    PROCESS,
+    NOTICE,
+    SHARE,
 }

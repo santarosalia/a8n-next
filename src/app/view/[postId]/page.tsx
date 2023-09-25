@@ -10,7 +10,7 @@ export default () => {
     const { postId } = params;
     const [post, setPost] = useState<Post>();
     const fetchData = async () => {
-        const res = await fetch(`/api/board/view/${postId}`, {
+        const res = await fetch(`/api/view/${postId}`, {
             method : 'GET'
         });
         const result: Post = await res.json();

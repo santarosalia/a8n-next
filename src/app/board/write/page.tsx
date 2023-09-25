@@ -85,7 +85,7 @@ export default () => {
             }
         });
         if (res.ok) {
-            router.push('/board');
+            router.push('/board?cat=0&page=1');
         }
     }
     const titleOnChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement> ) => {

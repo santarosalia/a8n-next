@@ -9,7 +9,8 @@ const handler = NextAuth({
     providers : [
         GoogleProvider({
             clientId : process.env.GOOGLE_CLIENT_ID ?? '',
-            clientSecret : process.env.GOOGLE_CLIENT_SECRET ?? ''
+            clientSecret : process.env.GOOGLE_CLIENT_SECRET ?? '',
+            
         }),
         CredentialProvider({
             name : 'Credentials',
@@ -42,8 +43,23 @@ const handler = NextAuth({
         strategy : "jwt",
         maxAge : 10 * 60 * 60,
     },
+    // jwt : {
+    //     async encode(data) {
+    //         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin/exists`, {
+    //             method: 'POST',
+    //             headers: {
+    //               'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //             email: data.token?.email,
+    //             }),
+    //         });
+    //         const user = await res.json();
+    //         return user;
+    //     },
+    // },
     callbacks : {
-        async jwt({token, user}) {
+        async jwt({token, user, account}) {
             return {...token, ...user};
         },
         async session({session, token, user}) {
