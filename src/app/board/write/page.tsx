@@ -67,8 +67,6 @@ export default () => {
     });
     
     const createButtonOnClick = async () => {
-        console.log(session)
-        
         const accessToken = session!.data!.user.accessToken;
         const res = await fetch('/api/board', {
             method : 'PUT',

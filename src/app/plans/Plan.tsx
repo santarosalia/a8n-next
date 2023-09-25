@@ -2,7 +2,7 @@
 import { CheckCircle } from "@mui/icons-material"
 import { Box, Button, List, ListItem, Paper, Typography } from "@mui/material"
 import { green, pink, yellow } from "@mui/material/colors"
-import { Plan } from "./interface"
+import { Plan } from "@/interface/Interface"
 
 export default (props: Plan) => {
     const Price = () => {
@@ -51,7 +51,7 @@ export default (props: Plan) => {
                     <Price></Price>
                 </Box>
                 <Box flex={1}>
-                    <Button href={props.href} target="_blank" className="bg-green-100" size="large"  variant="contained" sx={{color : 'green', ":hover" : {backgroundColor : green[200]} ,backgroundColor : green[100]}}>
+                    <Button href={props.href} className="bg-green-100" size="large"  variant="contained" sx={{color : 'green', ":hover" : {backgroundColor : green[200]} ,backgroundColor : green[100]}}>
                         { props.buttonText }
                     </Button>
                 </Box>

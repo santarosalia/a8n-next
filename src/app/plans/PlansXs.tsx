@@ -1,7 +1,7 @@
 'use client'
 import { Box, Button, ButtonGroup, Typography } from "@mui/material"
 import Plan from "./Plan"
-import { plans } from "./constants"
+import { plans } from "@/constants/Constants"
 import { useEffect, useState } from "react"
 export default () => {
     const [showPlan, setShowPlan] = useState(0);

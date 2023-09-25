@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material"
 import Plan from "./Plan"
-import { plans } from "./constants"
+import { plans } from "@/constants/Constants"
 
 export default () => {
     const Plans = () => {

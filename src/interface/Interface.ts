@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Post {
     index: number,
     id: string
@@ -20,4 +22,15 @@ export enum Category {
     ALL,
     NOTICE,
     SHARE,
+}
+
+export interface Plan {
+    title: string,
+    subtitle: string,
+    access: string[],
+    buttonText: string,
+    price?: string,
+    href: string,
+    img: string,
+    children?: ReactNode
 }
