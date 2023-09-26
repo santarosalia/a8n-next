@@ -22,7 +22,10 @@ const ResponsiveAppBar = () => {
     const handleCloseNavMenu = () => {
     setAnchorElNav(null);
     };
-
+    React.useEffect(() => {
+        const imp = window.IMP;
+        imp.init('imp03655385');
+    },[]);
     
 
     return (

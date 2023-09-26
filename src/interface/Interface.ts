@@ -32,5 +32,15 @@ export interface Plan {
     price?: string,
     href: string,
     img: string,
+    detailPrice?: DetailPrice[],
     children?: ReactNode
+}
+
+export interface DetailPrice {
+    period: string,
+    price: {
+        us: string,
+        ko: string
+    },
+    desc: string
 }

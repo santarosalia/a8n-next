@@ -3,43 +3,46 @@ import { CheckCircleOutline, RadioButtonUnchecked } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Typography } from "@mui/material"
 import { green } from "@mui/material/colors";
 import { MouseEvent, useState } from "react";
+import { plans } from "@/constants/Constants";
 
 export default () => {
     const [checkedPlan, setCheckedPlan] = useState(1);
-    const unlimitedPlan = [0,1,2];
+    const unlimitedPlan = plans.find(plan => plan.title === 'Unlimited');
+    const detailPrices = unlimitedPlan?.detailPrice;
     const paperOnClick = (i: number) => {
         setCheckedPlan(i);
     }
+    const payment = async () => {
+        window.IMP.request_pay({
+            pg: "kcp.{store-367eb210-88e3-4b07-b163-e4a86c7f3cb7}",
+            pay_method: "card",
+            merchant_uid: "ORD20180131-0000011",   // 주문번호
+            name: "Unlimited Plan",
+            amount: 1000,                         // 숫자 타입
+            buyer_email: "user@gmail.com",
+            buyer_name: "user",
+            // buyer_tel: "010-4242-4242",
+            // buyer_addr: "서울특별시 강남구 신사동",
+            // buyer_postcode: "01181"
+          }, (res: {
+            error_msg: string,
+            imp_uid: string,
+            merchant_uid: string,
+            pay_method: string,
+            pg_provider: string,
+            pg_type: string,
+            success: boolean
+          }) => { // callback
+            //res.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+            if (res.success) {
 
-    const paperss = (i: number) => {
-        <Paper
-            component={'button'}
-            variant="outlined"
-            onClick={() => paperOnClick(i)}
-            key={i}
-            sx={{
-                display : 'flex',
-                flexDirection : 'column',
-                flex : 1,
-                margin : 1,
-                marginX : {
-                    xs : 'auto',
-                    md : 1
-                },
-                padding : 1,
-                ':hover' : {
-                    scale : '1.03'
-                },
-                width : {
-                    xs : '70vw',
-                    md : '100%'
-                },
-                height : '120px',
-            }}
-            ></Paper>
+            } else {
+
+            }
+          });
     }
     
-    const papers = unlimitedPlan.map(i => {
+    const papers = detailPrices?.map((detailPrice, i) => {
         return (
             <Paper
             component={'button'}
@@ -66,7 +69,8 @@ export default () => {
                     },
                     height : '120px',
                     borderColor : green[600],
-                    backgroundColor : green[50]
+                    backgroundColor : green[50],
+                    boxShadow : 1
                 }
             }
             :
@@ -89,6 +93,7 @@ export default () => {
                         md : '100%'
                     },
                     height : '120px',
+                    boxShadow : 1
                 }
             })}
             >
@@ -98,17 +103,17 @@ export default () => {
                     :
                     <RadioButtonUnchecked fontSize="small" sx={{color : green[600]}}></RadioButtonUnchecked>}
                     <Typography variant="h6" marginX={1}>
-                        period
+                        {detailPrice.period}
                     </Typography>
                 </Box>
                 <Box display={'flex'}>
                     {checkedPlan === i ?
                     <Typography variant="h4" marginLeft={3} sx={{color : green[600]}}>
-                    price
+                        ${detailPrice.price.us}
                     </Typography>
                     :
                     <Typography variant="h4" marginLeft={3}>
-                        price
+                        ${detailPrice.price.us}
                     </Typography>
                 }
                 <Typography lineHeight={3.5}>
@@ -117,7 +122,7 @@ export default () => {
                 </Box>
                 <Box>
                     <Typography variant="subtitle2" marginX={3}>
-                        desc
+                        {detailPrice.desc}
                     </Typography>
                 </Box>
             </Paper>
@@ -146,18 +151,42 @@ export default () => {
                     </Box>
                    <Box
                    width={'100%'}
-                   height={'360px'}
                    display={'flex'}
                    sx={{
                     flexDirection : {
                         xs : 'column',
                         md : 'row'
+                    },
+                    height : {
+                        xs : '360px',
+                        md : '150px'
                     }
                    }}
                    justifyContent={'center'}
                    >
                     {papers}
-                    </Box> 
+                    </Box>
+                    <Box
+                    display={'flex'}
+                    justifyContent={'center'}
+                    marginY={3}
+                    >
+                        <Box
+                        component={Button}
+                        onClick={payment}
+                        width={'300px'}
+                        height={'50px'}
+                        borderRadius={5}
+                        className="bg-green-100"
+                        sx={{
+                            color : 'green',
+                            ":hover" : {backgroundColor : green[200]},
+                            backgroundColor : green[100]
+                        }}
+                        >
+                            Buy Now
+                        </Box>
+                    </Box>
                 </Box>      
             </Box>  
         </Container>

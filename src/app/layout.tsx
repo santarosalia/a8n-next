@@ -25,6 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <head>
+        <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+      </head>
       <body className={notoSansKr.className}>
         <Provider>
           <Header/>
