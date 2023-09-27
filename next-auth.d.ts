@@ -20,9 +20,9 @@ declare module "next-auth/jwt" {
         id: string
         accessToken: string
         // id: string
-        // email: string
+        email: string
         // image?: string | null
-        // name?: string | null
+        name?: string | null
         // emailVerified: Date | null
     }
 }
