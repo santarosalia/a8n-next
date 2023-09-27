@@ -10,19 +10,21 @@ declare module "next-auth" {
       /** The user's postal address. */
       id: string
       name?: string | null
-      email: string
+      email?: string | null
       accessToken: string
     }
   }
 }
 declare module "next-auth/jwt" {
     interface JWT extends DefaultJWT {
+        
         id: string
         accessToken: string
         // id: string
-        email: string
+        email?: string | null
         // image?: string | null
         name?: string | null
+        
         // emailVerified: Date | null
     }
 }
