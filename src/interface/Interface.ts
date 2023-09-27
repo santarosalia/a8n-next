@@ -32,11 +32,12 @@ export interface Plan {
     price?: string,
     href: string,
     img: string,
-    detailPrice?: DetailPrice[],
+    detailPrices?: DetailPrice[],
     children?: ReactNode
 }
 
 export interface DetailPrice {
+    index: number,
     period: string,
     price: {
         us: string,

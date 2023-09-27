@@ -4,14 +4,18 @@ import { Box, Button, Container, Paper, Typography } from "@mui/material"
 import { green } from "@mui/material/colors";
 import { MouseEvent, useState } from "react";
 import { plans } from "@/constants/Constants";
+import { DetailPrice } from "@/interface/Interface";
+import { useSession } from "next-auth/react";
 
 export default () => {
-    const [checkedPlan, setCheckedPlan] = useState(1);
+    const [selectedPice, setSelectedPrice] = useState<DetailPrice>();
+    const session = useSession();
     const unlimitedPlan = plans.find(plan => plan.title === 'Unlimited');
-    const detailPrices = unlimitedPlan?.detailPrice;
+    const detailPrices = unlimitedPlan!.detailPrices;
     const paperOnClick = (i: number) => {
-        setCheckedPlan(i);
+        setSelectedPrice(detailPrices![i]);
     }
+    
     const payment = async () => {
         window.IMP.request_pay({
             pg: "kcp.{store-367eb210-88e3-4b07-b163-e4a86c7f3cb7}",
@@ -19,11 +23,8 @@ export default () => {
             merchant_uid: "ORD20180131-0000011",   // 주문번호
             name: "Unlimited Plan",
             amount: 1000,                         // 숫자 타입
-            buyer_email: "user@gmail.com",
-            buyer_name: "user",
-            // buyer_tel: "010-4242-4242",
-            // buyer_addr: "서울특별시 강남구 신사동",
-            // buyer_postcode: "01181"
+            buyer_email: session.data?.user.email,
+            buyer_name: session.data?.user.name,
           }, (res: {
             error_msg: string,
             imp_uid: string,
@@ -49,7 +50,7 @@ export default () => {
             variant="outlined"
             onClick={() => paperOnClick(i)}
             key={i}
-            {...(checkedPlan === i ? {
+            {...(selectedPice?.index === i ? {
                 sx :{
                     display : 'flex',
                     flexDirection : 'column',
@@ -98,7 +99,7 @@ export default () => {
             })}
             >
                 <Box display={'flex'}>
-                    {checkedPlan === i ? 
+                    {selectedPice?.index === i ? 
                     <CheckCircleOutline fontSize="small" sx={{color : green[600]}}></CheckCircleOutline>
                     :
                     <RadioButtonUnchecked fontSize="small" sx={{color : green[600]}}></RadioButtonUnchecked>}
@@ -107,7 +108,7 @@ export default () => {
                     </Typography>
                 </Box>
                 <Box display={'flex'}>
-                    {checkedPlan === i ?
+                    {selectedPice?.index === i ?
                     <Typography variant="h4" marginLeft={3} sx={{color : green[600]}}>
                         ${detailPrice.price.us}
                     </Typography>

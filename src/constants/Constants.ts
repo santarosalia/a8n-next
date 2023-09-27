@@ -32,25 +32,28 @@ export const plans: Plan[] = [
         href : '/plans/unlimited',
         price : '1',
         img : '/unlimited.png',
-        detailPrice : [{
+        detailPrices : [{
+            index : 0,
             period : '1 Month',
             price : {
                 us : '7.77',
-                ko : '7,000'
+                ko : '7000'
             },
             desc : ''
         }, {
+            index : 1,
             period : '1 Year',
             price : {
                 us : '3.33',
-                ko : '3,000'
+                ko : '3000'
             },
             desc : ''
         }, {
+            index : 2,
             period : '3 Years',
             price : {
                 us : '1.00',
-                ko : '1,000'
+                ko : '1000'
             },
             desc : ''
         }]

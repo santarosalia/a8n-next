@@ -10,6 +10,7 @@ declare module "next-auth" {
       /** The user's postal address. */
       id: string
       name?: string | null
+      email: string
       accessToken: string
     }
   }
