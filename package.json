@@ -17,6 +17,7 @@
     "@mui/material": "^5.14.8",
     "@mui/styled-engine-sc": "^5.14.8",
     "@prisma/client": "^5.2.0",
+    "@reduxjs/toolkit": "^1.9.6",
     "@types/bcrypt": "^5.0.0",
     "@types/dompurify": "^3.0.3",
     "@types/jsonwebtoken": "^9.0.2",
@@ -39,6 +40,8 @@
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-query": "^3.39.3",
     "react-quill": "^2.0.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
     "styled-components": "^5.3.11",
     "tailwindcss": "^3.3.3",
     "typescript": "5.2.2"

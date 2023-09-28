@@ -32,13 +32,13 @@ export default ({children} :
     const onClickCategory = (categoryIndex: number) => {
         setSelectedCategory(categoryIndex);
         const category = CATEGORY[Number(categoryIndex) as Category];
-        router.push(`${category}`);
+        router.push(`${category}?page=1`);
     }
 
     const onChangeCategory = (e: SelectChangeEvent) => {
         setSelectedCategory(Number(e.target.value));
         const category = CATEGORY[Number(e.target.value) as Category];
-        router.push(`${category}`);
+        router.push(`${category}?page=1`);
     }
 
     const menus = Object.entries(CATEGORY).map(entry => {

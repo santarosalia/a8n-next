@@ -5,7 +5,7 @@ import {Adb as AdbIcon, Menu as MenuIcon} from '@mui/icons-material';
 import {usePathname} from 'next/navigation'
 import * as React from 'react';
 import Link from "next/link";
-import HeaderSettings from "@/components/HeaderSettings";
+import SigninMenu from "@/app/SigninMenu";
 
 const pages = ['Plans','Usage','Board'];
 
@@ -92,7 +92,7 @@ const ResponsiveAppBar = () => {
                     </Button>
                     ))}
                 </Box>
-                <HeaderSettings></HeaderSettings>
+                <SigninMenu/>
                 </Toolbar>
             </Container>
         </AppBar>

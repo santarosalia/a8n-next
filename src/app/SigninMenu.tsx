@@ -1,14 +1,18 @@
 
-import { Label } from "@mui/icons-material";
-import { Avatar, Box, Button, Chip, CircularProgress, Dialog, DialogContent, Divider, IconButton, InputLabel, Menu, MenuItem, Paper, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Box, Button, Chip, Dialog, DialogContent, Divider, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
-
+import { open, close } from "@/redux/slices/signinModal";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
 
 export default () => {
+    const dispatch = useDispatch();
+    const isOpen = useSelector((state: RootState) => {
+        return state.signinModal.isOpen;
+    })
     const {data: session, status} = useSession();
     const [inputs, setInputs] = React.useState({
         email : '',
@@ -73,10 +77,10 @@ export default () => {
     }
     return (
         <>
-        <Button onClick={() => {setOpenSignInModal(true)}} color="inherit">
+        <Button onClick={() => dispatch(open(null))} color="inherit">
             Signin
         </Button>
-        <Dialog open={openSignInModal} onClose={() => {setOpenSignInModal(false)}}>
+        <Dialog open={isOpen} onClose={() => dispatch(close(null))}>
             <DialogContent>
                 <Box>
                     <InputLabel htmlFor="email" size="normal">Email</InputLabel>

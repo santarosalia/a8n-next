@@ -8,10 +8,10 @@ import { DetailPrice } from "@/interface/Interface";
 import { useSession } from "next-auth/react";
 
 export default () => {
-    const [selectedPice, setSelectedPrice] = useState<DetailPrice>();
     const session = useSession();
     const unlimitedPlan = plans.find(plan => plan.title === 'Unlimited');
     const detailPrices = unlimitedPlan!.detailPrices;
+    const [selectedPice, setSelectedPrice] = useState<DetailPrice>(detailPrices![1]);
     const paperOnClick = (i: number) => {
         setSelectedPrice(detailPrices![i]);
     }
@@ -22,7 +22,7 @@ export default () => {
             pay_method: "card",
             merchant_uid: "ORD20180131-0000011",   // 주문번호
             name: "Unlimited Plan",
-            amount: 1000,                         // 숫자 타입
+            amount: selectedPice?.price.ko,                         // 숫자 타입
             buyer_email: session.data?.user.email,
             buyer_name: session.data?.user.name,
           }, (res: {
@@ -43,14 +43,14 @@ export default () => {
           });
     }
     
-    const papers = detailPrices?.map((detailPrice, i) => {
+    const papers = detailPrices!.map((detailPrice, i) => {
         return (
             <Paper
             component={'button'}
             variant="outlined"
             onClick={() => paperOnClick(i)}
             key={i}
-            {...(selectedPice?.index === i ? {
+            {...(selectedPice.index === i ? {
                 sx :{
                     display : 'flex',
                     flexDirection : 'column',
@@ -99,7 +99,7 @@ export default () => {
             })}
             >
                 <Box display={'flex'}>
-                    {selectedPice?.index === i ? 
+                    {selectedPice.index === i ? 
                     <CheckCircleOutline fontSize="small" sx={{color : green[600]}}></CheckCircleOutline>
                     :
                     <RadioButtonUnchecked fontSize="small" sx={{color : green[600]}}></RadioButtonUnchecked>}
@@ -108,7 +108,7 @@ export default () => {
                     </Typography>
                 </Box>
                 <Box display={'flex'}>
-                    {selectedPice?.index === i ?
+                    {selectedPice.index === i ?
                     <Typography variant="h4" marginLeft={3} sx={{color : green[600]}}>
                         ${detailPrice.price.us}
                     </Typography>

@@ -1,6 +1,5 @@
 'use client'
 import {Button, Container} from '@mui/material';
-import { signIn, signOut, useSession } from "next-auth/react";
 import Section1 from './Section1';
 import Section2 from './Section2';
 
