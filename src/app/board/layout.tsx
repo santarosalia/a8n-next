@@ -123,7 +123,7 @@ export default ({children} :
                         </List>
                     </ThemeProvider>
                 </Box>
-                <Box flex={9} height={'100vh'} padding={1} display={'flex'} flexDirection={'column'}>
+                <Box flex={9} padding={1} display={'flex'} flexDirection={'column'}>
                     {children}
                 </Box>
                 <Box flex={2}

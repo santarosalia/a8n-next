@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
 import Header from './Header';
 import Provider from '@/provider/Provider';
+import Footer from './Footer';
 
 const notoSansKr = Noto_Sans_KR({ 
   subsets : ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Provider>
           <Header/>
           {children}
+          <Footer/>
         </Provider>
       </body>
     </html>
