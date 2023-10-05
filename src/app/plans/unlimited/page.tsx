@@ -17,7 +17,9 @@ export default () => {
     }
     
     const payment = async () => {
-        window.IMP.request_pay({
+        const imp = window.IMP;
+        imp.init('imp03655385');
+        imp.request_pay({
             pg: "kcp.{store-367eb210-88e3-4b07-b163-e4a86c7f3cb7}",
             pay_method: "card",
             merchant_uid: "ORD20180131-0000011",   // 주문번호
