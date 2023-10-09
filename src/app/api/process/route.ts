@@ -32,17 +32,34 @@ export const PUT = async (req: Request) => {
         });
     }
     const body = await req.json();
-    console.log(body)
     const name = body.name;
     const data = body.data;
     const userId = body.userId;
-
-    const process = await prisma.process.create({
-        data : {
+    const findProcess = await prisma.process.findFirst({
+        where : {
             name : name,
-            data : data,
             userId : userId
         }
     });
-    return new Response(JSON.stringify(process));
+    if (findProcess) {
+        await prisma.process.update({
+            where : {
+                id : findProcess.id
+            },
+            data : {
+                name : name,
+                data : data,
+            }
+        })
+    } else {
+        await prisma.process.create({
+            data : {
+                name : name,
+                data : data,
+                userId : userId
+            }
+        });
+    }
+    
+    return new Response(JSON.stringify(true));
 }
