@@ -9,9 +9,9 @@ export default ({posts}: {posts: Post[]}) => {
     
 
     if (!posts) {
-        return Array.from({length : 10}, (v, i) => i).map(() => {
+        return Array.from({length : 10}, (v, i) => i).map((i) => {
             return (
-                <Skeleton height={'70px'} variant="rectangular" animation="wave" sx={{margin : 1}}></Skeleton>
+                <Skeleton height={'70px'} key={i} variant="rectangular" animation="wave" sx={{margin : 1}}></Skeleton>
             )
         })
     }
