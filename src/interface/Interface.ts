@@ -45,3 +45,15 @@ export interface DetailPrice {
     },
     desc: string
 }
+
+interface UserSession {
+    accessToken: string,
+    createdAt: string,
+    email: string,
+    emailVerified?: string,
+    id: string,
+    image?: string,
+    level: number,
+    name: string,
+    updatedAt: string
+}
