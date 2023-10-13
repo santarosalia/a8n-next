@@ -52,6 +52,7 @@ export const PUT = async (req: Request) => {
             }
         })
     } else {
+        console.log(body);
         await prisma.process.create({
             data : {
                 name : name,

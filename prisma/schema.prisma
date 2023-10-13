@@ -38,7 +38,7 @@ model Session {
 model Process {
   id        String    @id @default(cuid())
   name      String
-  data      String?
+  data      String?   @db.Text
   userId    String
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
