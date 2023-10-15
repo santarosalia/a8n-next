@@ -1,5 +1,6 @@
 import { signJwtAccessToken, verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
+import { getMaxProcessCount } from "./func";
 
 export const POST = async (req: Request) => {
     const accessToken = req.headers.get('authorization');
@@ -35,6 +36,12 @@ export const PUT = async (req: Request) => {
     const name = body.name;
     const data = body.data;
     const userId = body.userId;
+
+    const user = await prisma.user.findUnique({
+        where : {
+            id : userId
+        }
+    });
     const findProcess = await prisma.process.findFirst({
         where : {
             name : name,
@@ -52,14 +59,29 @@ export const PUT = async (req: Request) => {
             }
         })
     } else {
-        console.log(body);
-        await prisma.process.create({
-            data : {
-                name : name,
-                data : data,
+
+        const maxProcessCount = getMaxProcessCount(user?.level!);
+        const currentProcessCount = await prisma.process.count({
+            where : {
                 userId : userId
             }
         });
+        const isFull = maxProcessCount <= currentProcessCount;
+        if (isFull) {
+            return new Response(JSON.stringify({
+                error : 'process limit'
+            }),{
+                status : 400
+            });
+        } else {
+            await prisma.process.create({
+                data : {
+                    name : name,
+                    data : data,
+                    userId : userId
+                }
+            });
+        }
     }
     
     return new Response(JSON.stringify(true));
