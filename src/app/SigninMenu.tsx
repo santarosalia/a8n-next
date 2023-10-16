@@ -1,34 +1,54 @@
 
 import { Box, Button, Chip, Dialog, DialogContent, Divider, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
-import React from "react";
-import { open, close } from "@/redux/slices/signinModal";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
+import { getIsOpenSigninDialog, setIsOpenSigninDialog } from "@/redux/slices/dialog";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
+// const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
+
+
+
 
 export default () => {
-    const dispatch = useDispatch();
-    const isOpen = useSelector((state: RootState) => {
-        return state.signinModal.isOpen;
-    })
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    
+
+    const settings = [
+        {
+            name : 'Profile',
+            onClick : () => {
+                router.push('/profile/my');
+                handleCloseUserMenu();
+            }
+        },
+        {
+            name : 'Signout',
+            onClick : () => {
+                signOut();
+                // handleCloseUserMenu();
+            }
+        }
+    ]
+    const isOpen = useAppSelector(getIsOpenSigninDialog);
+
     const {data: session, status} = useSession();
-    const [inputs, setInputs] = React.useState({
+    const [inputs, setInputs] = useState({
         email : '',
         password : ''
     });
     const {email, password} = inputs;
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {id, value} = e.target;
         setInputs({
             ...inputs,
             [id] : value
         });
     } 
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const [openSignInModal, setOpenSignInModal] = React.useState(false);
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
     const handleCloseUserMenu = () => {
@@ -66,9 +86,9 @@ export default () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
                 >
-                {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={setting === 'Signout' ? signOutSession : handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                {settings.map((setting, i) => (
+                    <MenuItem key={i} onClick={setting.onClick}>
+                    <Typography textAlign="center">{setting.name}</Typography>
                     </MenuItem>
                 ))}
                 </Menu>
@@ -77,10 +97,10 @@ export default () => {
     }
     return (
         <>
-        <Button onClick={() => dispatch(open(null))} color="inherit">
+        <Button onClick={() => dispatch(setIsOpenSigninDialog(true))} color="inherit">
             Signin
         </Button>
-        <Dialog open={isOpen} onClose={() => dispatch(close(null))}>
+        <Dialog open={isOpen} onClose={() => dispatch(setIsOpenSigninDialog(false))}>
             <DialogContent>
                 <Box>
                     <InputLabel htmlFor="email" size="normal">Email</InputLabel>

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import signinModal from "./slices/signinModal";
+import dialog from "./slices/dialog";
 
 export const store = configureStore({
   reducer: {
-    signinModal : signinModal.reducer
+    dialog : dialog.reducer
   },
   devTools: process.env.NODE_ENV !== "production",
 });
