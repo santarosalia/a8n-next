@@ -18,9 +18,9 @@ export default () => {
 
     const settings = [
         {
-            name : 'Profile',
+            name : 'Account',
             onClick : () => {
-                router.push('/profile/my');
+                router.push('/account/overview');
                 handleCloseUserMenu();
             }
         },

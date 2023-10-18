@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dialog from "./slices/dialog";
+import dialogSlice from "./slices/dialog";
+import processSlice from './slices/process';
 
 export const store = configureStore({
   reducer: {
-    dialog : dialog.reducer
+    dialog : dialogSlice.reducer,
+    process : processSlice.reducer
+
   },
   devTools: process.env.NODE_ENV !== "production",
 });
