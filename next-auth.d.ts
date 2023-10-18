@@ -12,7 +12,7 @@ declare module "next-auth" {
       name?: string | null
       email?: string | null
       accessToken: string
-      level: number
+      level?: number
     }
   }
 }
