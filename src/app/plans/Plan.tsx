@@ -51,7 +51,7 @@ export default (props: Plan) => {
                     <Price></Price>
                 </Box>
                 <Box flex={1}>
-                    <Button href={props.href} className="bg-green-100" size="large"  variant="contained" sx={{color : 'green', ":hover" : {backgroundColor : green[200]} ,backgroundColor : green[100]}}>
+                    <Button href={props.href} {...(props.title === 'Free' ? {target : '_blank'} : null)} className="bg-green-100" size="large"  variant="contained" sx={{color : 'green', ":hover" : {backgroundColor : green[200]} ,backgroundColor : green[100]}}>
                         { props.buttonText }
                     </Button>
                 </Box>

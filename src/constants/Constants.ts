@@ -7,6 +7,9 @@ export const CATEGORY = {
     [Category.SHARE] : 'share'
 }
 
+export const EXTENSION_ID = 'cfoccihaknngbcniilfkeebigdnoonnh';
+
+export const EXTENSION_URL = 'https://chrome.google.com/webstore/detail/a8n/cfoccihaknngbcniilfkeebigdnoonnh';
 
 export const plans: Plan[] = [
     {
@@ -17,7 +20,7 @@ export const plans: Plan[] = [
             'Save 5 processes'
         ],
         buttonText : 'Try for free',
-        href : 'https://naver.com',
+        href : EXTENSION_URL,
         img : '/free.png'
     },
     {

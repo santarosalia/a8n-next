@@ -6,9 +6,22 @@ import {usePathname} from 'next/navigation'
 import * as React from 'react';
 import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
+import { EXTENSION_URL } from "@/constants/Constants";
 
-const pages = ['Plans','Usage','Board'];
-
+// const pages = ['Plans','Usage','Board','Get Extension'];
+const pages = [{
+    name : 'Plans',
+    url : '/plans'
+},{
+    name : 'Usage',
+    url : '/usage'
+},{
+    name : 'Board',
+    url : '/board'
+},{
+    name : 'Get Extension',
+    url : EXTENSION_URL
+}];
 const ResponsiveAppBar = () => {
     const pathname = usePathname();
     if (pathname === '/signup') return (<></>)
@@ -60,11 +73,11 @@ const ResponsiveAppBar = () => {
                         display: { xs: 'block', md: 'none' },
                     }}
                     >
-                    {pages.map((page) => (
-                        <MenuItem key={page}
+                    {pages.map((page, i) => (
+                        <MenuItem key={i}
                         onClick={handleCloseNavMenu}>
-                            <Link href={`/${page.toLowerCase()}`}>
-                                <Typography textAlign="center">{page}</Typography>
+                            <Link href={page.url} {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}>
+                                <Typography textAlign="center">{page.name}</Typography>
                             </Link>
                         </MenuItem>
                     ))}
@@ -77,14 +90,15 @@ const ResponsiveAppBar = () => {
                 </Box>
                 
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    {pages.map((page) => (
+                    {pages.map((page, i) => (
                     <Button
-                        key={page}
-                        href={`/${page.toLowerCase()}`}
+                        key={i}
+                        href={page.url}
+                        {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}
                         onClick={handleCloseNavMenu}
                         sx={{ my: 2, color: 'white', display: 'block' }}
                     >
-                        {page}
+                        {page.name}
                     </Button>
                     ))}
                 </Box>
