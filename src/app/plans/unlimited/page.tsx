@@ -3,13 +3,13 @@ import { CheckCircleOutline, RadioButtonUnchecked } from "@mui/icons-material";
 import { Box, Button, Container, Paper, Typography } from "@mui/material"
 import { green } from "@mui/material/colors";
 import { MouseEvent, useState } from "react";
-import { plans } from "@/constants/Constants";
+import { PLANS } from "@/constants/Constants";
 import { DetailPrice } from "@/interface/Interface";
 import { useSession } from "next-auth/react";
 
 export default () => {
     const session = useSession();
-    const unlimitedPlan = plans.find(plan => plan.title === 'Unlimited');
+    const unlimitedPlan = PLANS.find(plan => plan.title === 'Unlimited');
     const detailPrices = unlimitedPlan!.detailPrices;
     const [selectedPice, setSelectedPrice] = useState<DetailPrice>(detailPrices![1]);
     const paperOnClick = (i: number) => {

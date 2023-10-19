@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material"
 import Plan from "./Plan"
-import { plans } from "@/constants/Constants"
+import { PLANS } from "@/constants/Constants"
 
 export default () => {
     const Plans = () => {
-        return plans.map((plan, i) => {
+        return PLANS.map((plan, i) => {
             return (
                 <Plan key={i}
                 title={plan.title}

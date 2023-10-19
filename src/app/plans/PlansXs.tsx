@@ -1,7 +1,7 @@
 'use client'
 import { Box, Button, ButtonGroup, Typography } from "@mui/material"
 import Plan from "./Plan"
-import { plans } from "@/constants/Constants"
+import { PLANS } from "@/constants/Constants"
 import { useEffect, useState } from "react"
 export default () => {
     const [showPlan, setShowPlan] = useState(0);
@@ -9,7 +9,7 @@ export default () => {
         setShowPlan(i);
     }
     const Buttons = () => {
-        return plans.map((plan, i) => {
+        return PLANS.map((plan, i) => {
             return (
                 <Button onClick={() => { onClick(i) }} key={i}>
                     {plan.title}
@@ -18,7 +18,7 @@ export default () => {
         })
     }
     const Plans = () => {
-        return plans.map((plan, i) => {
+        return PLANS.map((plan, i) => {
             return (
                 <Plan key={i}
                 title={plan.title}

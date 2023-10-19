@@ -25,7 +25,7 @@ export const EXTENSION_ID = 'cfoccihaknngbcniilfkeebigdnoonnh';
 
 export const EXTENSION_URL = 'https://chrome.google.com/webstore/detail/a8n/cfoccihaknngbcniilfkeebigdnoonnh';
 
-export const plans: Plan[] = [
+export const PLANS: Plan[] = [
     {
         title : 'Free',
         subtitle : 'Testing and limited usage',
