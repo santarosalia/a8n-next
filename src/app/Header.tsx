@@ -1,31 +1,17 @@
 'use client';
 import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
-import {Adb as AdbIcon, Menu as MenuIcon} from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import {usePathname} from 'next/navigation'
-import * as React from 'react';
+import { useState } from 'react';
 import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
-import { EXTENSION_URL } from "@/constants/Constants";
+import { PAGES } from "@/constants/Constants";
 
-// const pages = ['Plans','Usage','Board','Get Extension'];
-const pages = [{
-    name : 'Plans',
-    url : '/plans'
-},{
-    name : 'Usage',
-    url : '/usage'
-},{
-    name : 'Board',
-    url : '/board'
-},{
-    name : 'Get Extension',
-    url : EXTENSION_URL
-}];
-const ResponsiveAppBar = () => {
+export default () => {
     const pathname = usePathname();
     if (pathname === '/signup') return (<></>)
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -73,7 +59,7 @@ const ResponsiveAppBar = () => {
                         display: { xs: 'block', md: 'none' },
                     }}
                     >
-                    {pages.map((page, i) => (
+                    {PAGES.map((page, i) => (
                         <MenuItem key={i}
                         onClick={handleCloseNavMenu}>
                             <Link href={page.url} {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}>
@@ -90,7 +76,7 @@ const ResponsiveAppBar = () => {
                 </Box>
                 
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    {pages.map((page, i) => (
+                    {PAGES.map((page, i) => (
                     <Button
                         key={i}
                         href={page.url}
@@ -108,5 +94,3 @@ const ResponsiveAppBar = () => {
         </AppBar>
     );
 }
-
-export default ResponsiveAppBar;

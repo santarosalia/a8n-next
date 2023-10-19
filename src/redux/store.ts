@@ -5,7 +5,7 @@ import processSlice from './slices/process';
 export const store = configureStore({
   reducer: {
     dialog : dialogSlice.reducer,
-    process : processSlice.reducer
+    process : processSlice.reducer,
 
   },
   devTools: process.env.NODE_ENV !== "production",

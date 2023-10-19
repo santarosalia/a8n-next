@@ -8,7 +8,7 @@ type InitialState = {
 const initialState: InitialState = {
   isOpenSigninDialog: false
 };
-const dialog = createSlice({
+const slice = createSlice({
   name: "dialog",
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ const dialog = createSlice({
   },
 });
 
-export default dialog;
-export const { setIsOpenSigninDialog } = dialog.actions;
+export default slice;
+export const { setIsOpenSigninDialog } = slice.actions;
 export const getIsOpenSigninDialog =  (state: RootState) => state.dialog.isOpenSigninDialog;

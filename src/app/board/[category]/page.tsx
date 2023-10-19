@@ -2,14 +2,14 @@
 import { Box, Button, ButtonGroup, Divider, List } from "@mui/material"
 import Pagination from "./Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Posts from "./Posts";
 import { setIsOpenSigninDialog } from "@/redux/slices/dialog";
 import { Create } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { getPosts } from "./fetch";
 import { Post } from "@/interface/Interface";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useSession } from "next-auth/react";
 
 export default ({ params }: { params: { category: string}}) => {
     
@@ -17,13 +17,14 @@ export default ({ params }: { params: { category: string}}) => {
     const dispatch = useAppDispatch();
     const page = searchParams.get('page')!;
     const session = useSession();
+    const user = session.data?.user;
     const { category } = params;
     const router = useRouter();
     const [count, setCount] = useState(0);
     const [posts, setPosts] = useState<Post[]>();
 
     const createButtonOnClick = () => {
-        if (!session.data?.user) {
+        if (user) {
             dispatch(setIsOpenSigninDialog(true));
         } else {
             router.push('/board/write');

@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { ExecuteMessage } from "@/interface/Interface";
 
 type InitialState = {
-    process: any
-    processes: any
+    process: ExecuteMessage | null
+    processes: ExecuteMessage[]
 };
 
 const initialState: InitialState = {
-    process : {},
+    process : null,
     processes : []
 };
-const dialog = createSlice({
-  name: "dialog",
+const slice = createSlice({
+  name: "process",
   initialState,
   reducers: {
     setProcess: (state, action) => {
@@ -23,7 +24,7 @@ const dialog = createSlice({
   },
 });
 
-export default dialog;
-export const { setProcess, setProcesses } = dialog.actions;
+export default slice;
+export const { setProcess, setProcesses } = slice.actions;
 export const getProcess = (state: RootState) => state.process.process;
 export const getProcesses = (state: RootState) => state.process.processes;

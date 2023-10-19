@@ -6,16 +6,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
-
-
-
 
 export default () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     
-
     const settings = [
         {
             name : 'Account',
@@ -34,7 +29,7 @@ export default () => {
     ]
     const isOpen = useAppSelector(getIsOpenSigninDialog);
 
-    const {data: session, status} = useSession();
+    const session = useSession();
     const [inputs, setInputs] = useState({
         email : '',
         password : ''
@@ -61,14 +56,14 @@ export default () => {
         await signOut();
     }
     
-    if (status === 'loading') {
+    if (session.status === 'loading') {
         return <Skeleton variant="rounded"></Skeleton>
     }
-    if (session) {
+    if (session.data?.user) {
         return (
             <Box sx={{ flexGrow: 0 }}>
                 <Button onClick={handleOpenUserMenu} sx={{ p: 0 }} color="inherit">
-                    {session?.user?.name?.toUpperCase() ?? 'User'}
+                    {session.data?.user?.name?.toUpperCase() ?? 'User'}
                 </Button>
                 <Menu
                 sx={{ mt: '45px' }}

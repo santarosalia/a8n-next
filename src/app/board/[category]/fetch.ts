@@ -1,7 +1,6 @@
 import { Post } from "@/interface/Interface";
 
 export const getPosts = async (category:string, page: number) => {
-    console.log(page)
     const res = await fetch(`/api/board/${category}/?page=${page}`, {
         method : 'GET'
     });

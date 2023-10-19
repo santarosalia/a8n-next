@@ -7,20 +7,6 @@ export const BOARD_CATEGORY = {
     [BoardCategory.SHARE] : 'share'
 }
 
-export const LEVEL = {
-    [Level.FREE] : {
-        planName : 'free',
-        maxProcess : 5,
-    },
-    [Level.UNLIMITED] : {
-        planName : 'unlimited',
-        maxProcess : 100,
-    },
-    [Level.ULTIMATE] : {
-        planName : 'ultimate',
-        maxProcess : 500,
-    }
-}
 export const EXTENSION_ID = 'cfoccihaknngbcniilfkeebigdnoonnh';
 
 export const EXTENSION_URL = 'https://chrome.google.com/webstore/detail/a8n/cfoccihaknngbcniilfkeebigdnoonnh';
@@ -35,7 +21,9 @@ export const PLANS: Plan[] = [
         ],
         buttonText : 'Try for free',
         href : EXTENSION_URL,
-        img : '/free.png'
+        img : '/free.png',
+        level : Level.FREE,
+        processMaxCount : 5
     },
     {
         title : 'Unlimited',
@@ -49,6 +37,8 @@ export const PLANS: Plan[] = [
         href : '/plans/unlimited',
         price : '1',
         img : '/unlimited.png',
+        level : Level.UNLIMITED,
+        processMaxCount : 100,
         detailPrices : [{
             index : 0,
             period : '1 Month',
@@ -86,5 +76,21 @@ export const PLANS: Plan[] = [
         href : '/plans/ultimate',
         price : '3',
         img : '/ultimate.png',
+        level : Level.ULTIMATE,
+        processMaxCount : 500,
     }
 ]
+
+export const PAGES = [{
+    name : 'Plans',
+    url : '/plans'
+},{
+    name : 'Usage',
+    url : '/usage'
+},{
+    name : 'Board',
+    url : '/board'
+},{
+    name : 'Get Extension',
+    url : EXTENSION_URL
+}];
