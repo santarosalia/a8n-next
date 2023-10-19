@@ -9,8 +9,6 @@ import SigninMenu from "@/app/SigninMenu";
 import { PAGES } from "@/constants/Constants";
 
 export default () => {
-    const pathname = usePathname();
-    if (pathname === '/signup') return (<></>)
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

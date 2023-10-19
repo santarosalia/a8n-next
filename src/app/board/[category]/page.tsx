@@ -24,7 +24,7 @@ export default ({ params }: { params: { category: string}}) => {
     const [posts, setPosts] = useState<Post[]>();
 
     const createButtonOnClick = () => {
-        if (user) {
+        if (!user) {
             dispatch(setIsOpenSigninDialog(true));
         } else {
             router.push('/board/write');
