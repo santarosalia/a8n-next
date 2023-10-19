@@ -40,8 +40,8 @@ export interface Plan {
     img: string,
     detailPrices?: DetailPrice[],
     children?: ReactNode,
-    level: Level,
-    processMaxCount: number
+    level?: Level,
+    processMaxCount?: number
 }
 
 export interface DetailPrice {
