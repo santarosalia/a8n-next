@@ -18,10 +18,16 @@ export interface Post {
     recommend: number
 }
 
-export enum Category {
+export enum BoardCategory {
     ALL,
     NOTICE,
     SHARE,
+}
+
+export enum Level {
+    FREE,
+    UNLIMITED,
+    ULTIMATE
 }
 
 export interface Plan {

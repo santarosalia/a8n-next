@@ -1,12 +1,26 @@
-import { Category, Plan, DetailPrice } from "@/interface/Interface"
+import { BoardCategory, Plan, DetailPrice, Level } from "@/interface/Interface"
 
 
-export const CATEGORY = {
-    [Category.ALL] : 'all',
-    [Category.NOTICE] : 'notice',
-    [Category.SHARE] : 'share'
+export const BOARD_CATEGORY = {
+    [BoardCategory.ALL] : 'all',
+    [BoardCategory.NOTICE] : 'notice',
+    [BoardCategory.SHARE] : 'share'
 }
 
+export const LEVEL = {
+    [Level.FREE] : {
+        planName : 'free',
+        maxProcess : 5,
+    },
+    [Level.UNLIMITED] : {
+        planName : 'unlimited',
+        maxProcess : 100,
+    },
+    [Level.ULTIMATE] : {
+        planName : 'ultimate',
+        maxProcess : 500,
+    }
+}
 export const EXTENSION_ID = 'cfoccihaknngbcniilfkeebigdnoonnh';
 
 export const EXTENSION_URL = 'https://chrome.google.com/webstore/detail/a8n/cfoccihaknngbcniilfkeebigdnoonnh';

@@ -4,9 +4,9 @@ import { grey } from "@mui/material/colors"
 import { ReactNode, useState } from "react"
 import { listItem } from "@/theme/CommonTheme"
 import { Search } from "@mui/icons-material"
-import { CATEGORY } from "@/constants/Constants"
+import { BOARD_CATEGORY } from "@/constants/Constants"
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Category } from "@/interface/Interface"
+import { BoardCategory } from "@/interface/Interface"
 export default ({children} :
     { children: ReactNode }
 ) => {
@@ -20,7 +20,7 @@ export default ({children} :
         pathName.startsWith('/board/view/')
         ) return (<>{children}</>)
     
-    const searchBoxSelectCategory = Object.entries(CATEGORY).map(entry => {
+    const searchBoxSelectCategory = Object.entries(BOARD_CATEGORY).map(entry => {
         const [key, value] = entry;
         return (
             <MenuItem value={key} key={key}>
@@ -31,17 +31,17 @@ export default ({children} :
 
     const onClickCategory = (categoryIndex: number) => {
         setSelectedCategory(categoryIndex);
-        const category = CATEGORY[Number(categoryIndex) as Category];
+        const category = BOARD_CATEGORY[Number(categoryIndex) as BoardCategory];
         router.push(`${category}?page=1`);
     }
 
     const onChangeCategory = (e: SelectChangeEvent) => {
         setSelectedCategory(Number(e.target.value));
-        const category = CATEGORY[Number(e.target.value) as Category];
+        const category = BOARD_CATEGORY[Number(e.target.value) as BoardCategory];
         router.push(`${category}?page=1`);
     }
 
-    const menus = Object.entries(CATEGORY).map(entry => {
+    const menus = Object.entries(BOARD_CATEGORY).map(entry => {
         const [key, value] = entry;
         return (
             <ListItemButton

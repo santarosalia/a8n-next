@@ -1,6 +1,6 @@
 'use client'
-import { CATEGORY } from "@/constants/Constants";
-import { Category } from "@/interface/Interface";
+import { BOARD_CATEGORY } from "@/constants/Constants";
+import { BoardCategory } from "@/interface/Interface";
 import { Create } from "@mui/icons-material";
 import { Box, Button, Container, Divider, MenuItem, Select, Skeleton, TextField, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
@@ -56,9 +56,9 @@ export default () => {
         }
     }
 
-    const categorySelectItems = Object.entries(CATEGORY).map(entry => {
+    const categorySelectItems = Object.entries(BOARD_CATEGORY).map(entry => {
         const [key, value] = entry;
-        if (Number(key) === Category.ALL) return;
+        if (Number(key) === BoardCategory.ALL) return;
         return (
             <MenuItem value={key} key={key}>
                 { value }

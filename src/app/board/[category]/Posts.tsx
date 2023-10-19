@@ -1,6 +1,6 @@
 'use client'
-import { CATEGORY } from "@/constants/Constants";
-import { Category, Post } from "@/interface/Interface";
+import { BOARD_CATEGORY } from "@/constants/Constants";
+import { BoardCategory, Post } from "@/interface/Interface";
 import { Comment, ThumbUp, Visibility } from "@mui/icons-material";
 import { Box, Chip, Divider, ListItem, Skeleton, Typography } from "@mui/material";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export default ({posts}: {posts: Post[]}) => {
             )
         })
         const date = new Date(post.createdAt);
-        const category = Number(post.category) as Category;
+        const category = Number(post.category) as BoardCategory;
         return (
             <div key={i}>
             <ListItem key={i} dense sx={{
@@ -46,7 +46,7 @@ export default ({posts}: {posts: Post[]}) => {
                     </Box>
                     <Box display={'flex'}>
                         <Chip
-                        label={CATEGORY[category]}
+                        label={BOARD_CATEGORY[category]}
                         size="small"
                         sx={{
                             height : '18px',

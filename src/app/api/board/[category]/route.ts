@@ -1,12 +1,12 @@
 import prisma from "@/app/lib/prisma";
-import { CATEGORY } from "@/constants/Constants";
-import { Category } from "@/interface/Interface";
+import { BOARD_CATEGORY } from "@/constants/Constants";
+import { BoardCategory } from "@/interface/Interface";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest, {params} : {params: {category: string}} ) => {
     const page = req.nextUrl.searchParams.get('page');
     const categoryName = params.category;
-    const cat = Object.entries(CATEGORY).find(entry => {
+    const cat = Object.entries(BOARD_CATEGORY).find(entry => {
         const [key, value] = entry;
         return value === categoryName;
     });
@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest, {params} : {params: {category: strin
     let posts;
     let count: number;
     switch (Number(category)) {
-        case Category.ALL : {
+        case BoardCategory.ALL : {
             count = await prisma.post.count();
             posts = await prisma.post.findMany({
                 orderBy : {
