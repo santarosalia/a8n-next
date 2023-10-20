@@ -6,8 +6,10 @@ import { fetchProcess } from "./fetch";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/redux/hooks";
 import { setProcesses } from "@/redux/slices/process";
+import { SideMenuItem } from "@/components/styled";
 
 export default ({children}: { children: ReactNode }) => {
+
     const dispatch = useAppDispatch();
     const router = useRouter();
     const accountMenus = [
@@ -43,7 +45,7 @@ export default ({children}: { children: ReactNode }) => {
                 <Box flex={1}>
                     <List sx={{display : 'flex', flexDirection : {md : 'column', xs : 'row'}}}>
                         {accountMenus.map((menu, i) => {
-                            return <MenuItem key={i} onClick={menu.onClick} sx={{borderRadius : 5}}>{menu.name}</MenuItem>
+                            return <SideMenuItem key={i} onClick={menu.onClick}>{menu.name}</SideMenuItem>
                         })}
                     </List>
                 </Box>

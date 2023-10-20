@@ -2,8 +2,7 @@
 import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
 import { Menu as MenuIcon } from '@mui/icons-material';
-import {usePathname} from 'next/navigation'
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
 import { PAGES } from "@/constants/Constants";
@@ -15,11 +14,9 @@ export default () => {
     setAnchorElNav(event.currentTarget);
     };
     
-
     const handleCloseNavMenu = () => {
     setAnchorElNav(null);
     };
-    
 
     return (
         <AppBar position="sticky" sx={{backgroundColor : 'black'}} variant="elevation">
