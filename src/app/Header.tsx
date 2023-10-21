@@ -72,15 +72,17 @@ export default () => {
                 
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {PAGES.map((page, i) => (
-                    <Button
+                    <MenuItem
                         key={i}
-                        href={page.url}
-                        {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}
                         onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
                     >
-                        {page.name}
-                    </Button>
+                        <Link
+                            href={page.url}
+                            {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}
+                            >
+                            {page.name}
+                        </Link>
+                    </MenuItem>
                     ))}
                 </Box>
                 <SigninMenu/>
