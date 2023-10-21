@@ -22,7 +22,7 @@ export default () => {
         <AppBar position="sticky" sx={{backgroundColor : 'black'}} variant="elevation">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box component='a' href="/" sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}>
+                    <Box component={Link} href="/" sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}>
                         <Image src='/rgb.gif' alt="logo" width={60} height={60}></Image>
                     </Box>
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
