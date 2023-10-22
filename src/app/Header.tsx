@@ -2,20 +2,30 @@
 import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
-import { PAGES } from "@/constants/Constants";
+import { EXTENSION_URL, PAGES } from "@/constants/Constants";
+import { useRouter } from "next/navigation";
 
 export default () => {
+    const router = useRouter();
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+        setAnchorElNav(event.currentTarget);
     };
     
     const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+        setAnchorElNav(null);
+    };
+    const navOnClick = (url: string) => {
+        setAnchorElNav(null);
+        if (url === EXTENSION_URL) {
+            window.open(url);
+        } else {
+            router.push(url!);
+        }
     };
 
     return (
@@ -56,10 +66,8 @@ export default () => {
                     >
                     {PAGES.map((page, i) => (
                         <MenuItem key={i}
-                        onClick={handleCloseNavMenu}>
-                            <Link href={page.url} {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}>
-                                <Typography textAlign="center">{page.name}</Typography>
-                            </Link>
+                        onClick={() => navOnClick(page.url)}>
+                            <Typography textAlign="center">{page.name}</Typography>
                         </MenuItem>
                     ))}
                     </Menu>
@@ -74,14 +82,10 @@ export default () => {
                     {PAGES.map((page, i) => (
                     <MenuItem
                         key={i}
-                        onClick={handleCloseNavMenu}
+                        onClick={() => navOnClick(page.url)}
+                        {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}
                     >
-                        <Link
-                            href={page.url}
-                            {...(page.name === 'Get Extension' ? {target : '_blank'} : null)}
-                            >
-                            {page.name}
-                        </Link>
+                        {page.name}
                     </MenuItem>
                     ))}
                 </Box>
