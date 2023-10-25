@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { fetchProcess } from "./fetch";
 import { useSession } from "next-auth/react";
 import { useAppDispatch } from "@/redux/hooks";
-import { setProcesses } from "@/redux/slices/process";
+import { setProcessInfos } from "@/redux/slices/process";
 import { SideMenuItem } from "@/components/styled";
 
 export default ({children}: { children: ReactNode }) => {
@@ -36,7 +36,7 @@ export default ({children}: { children: ReactNode }) => {
     const session = useSession();
     if (session.data?.user) {
         fetchProcess(session.data?.user.id!).then(result => {
-            dispatch(setProcesses(result));
+            dispatch(setProcessInfos(result));
         });
     }
     return (

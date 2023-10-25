@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { ExecuteMessage } from "@/interface/Interface";
+import { ExecuteMessage, ProcessInfo } from "@/interface/Interface";
 
 type InitialState = {
     process: ExecuteMessage | null
-    processes: ExecuteMessage[]
+    processInfos: ProcessInfo[]
 };
 
 const initialState: InitialState = {
     process : null,
-    processes : []
+    processInfos : []
 };
 const slice = createSlice({
   name: "process",
@@ -18,13 +18,13 @@ const slice = createSlice({
     setProcess: (state, action) => {
       state.process = action.payload;
     },
-    setProcesses: (state, action) => {
-        state.processes = action.payload;
+    setProcessInfos: (state, action) => {
+        state.processInfos = action.payload;
     }
   },
 });
 
 export default slice;
-export const { setProcess, setProcesses } = slice.actions;
+export const { setProcess, setProcessInfos } = slice.actions;
 export const getProcess = (state: RootState) => state.process.process;
-export const getProcesses = (state: RootState) => state.process.processes;
+export const getProcessInfos = (state: RootState) => state.process.processInfos;

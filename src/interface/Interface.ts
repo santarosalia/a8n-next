@@ -163,3 +163,8 @@ export interface ExecuteMessage {
         parameter? : ExecuteActionParameter
     }
 }
+
+export interface ProcessInfo {
+    id: string,
+    name: string
+}

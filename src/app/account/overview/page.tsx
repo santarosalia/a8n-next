@@ -1,7 +1,7 @@
 'use client'
 import { PLANS } from "@/constants/Constants";
 import { useAppSelector } from "@/redux/hooks";
-import { getProcesses } from "@/redux/slices/process";
+import { getProcessInfos } from "@/redux/slices/process";
 import { Backdrop, Box, Button, CircularProgress, Divider, LinearProgress, Typography,  } from "@mui/material";
 import { green } from "@mui/material/colors";
 import { useSession } from "next-auth/react";
@@ -10,9 +10,9 @@ export default () => {
     const session = useSession();
     const user = session.data?.user;
     const userPlan = PLANS.find(plan => plan.level === user?.level);
-    const processes = useAppSelector(getProcesses);
-    const remainingCount = userPlan?.processMaxCount! - processes.length;
-    const remainingValue = processes.length / userPlan?.processMaxCount! * 100;
+    const processInfos = useAppSelector(getProcessInfos);
+    const remainingCount = userPlan?.processMaxCount! - processInfos.length;
+    const remainingValue = processInfos.length / userPlan?.processMaxCount! * 100;
     if (!user) {
         return (
             <Backdrop open>
