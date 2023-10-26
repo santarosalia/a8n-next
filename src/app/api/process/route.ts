@@ -1,4 +1,4 @@
-import { signJwtAccessToken, verifyJwt } from "@/app/lib/jwt";
+import { verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 import { getMaxProcessCount } from "./func";
 import { NextResponse } from "next/server";

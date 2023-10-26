@@ -3,14 +3,13 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from "@/app/lib/prisma";
-import { signJwtAccessToken } from "@/app/lib/jwt";
 
 const handler = NextAuth({
     adapter : PrismaAdapter(prisma),
     providers : [
         GoogleProvider({
-            clientId : process.env.GOOGLE_CLIENT_ID ?? '',
-            clientSecret : process.env.GOOGLE_CLIENT_SECRET ?? ''
+            clientId : process.env.GOOGLE_CLIENT_ID!,
+            clientSecret : process.env.GOOGLE_CLIENT_SECRET!
         }),
         CredentialProvider({
             name : 'Credentials',
@@ -30,6 +29,7 @@ const handler = NextAuth({
                     }),
                 });
                 const user = await res.json();
+                console.log(res)
                 if (user) {
                     return user;
                 } else {
@@ -41,23 +41,8 @@ const handler = NextAuth({
     ],
     session : {
         strategy : "jwt",
-        maxAge : 10 * 60 * 60,
+        maxAge : 10 * 60 * 60
     },
-    // jwt : {
-    //     async encode(data) {
-    //         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signin/exists`, {
-    //             method: 'POST',
-    //             headers: {
-    //               'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //             email: data.token?.email,
-    //             }),
-    //         });
-    //         const user = await res.json();
-    //         return user;
-    //     },
-    // },
     callbacks : {
         async jwt({token, user, account}) {
             if (account?.provider === 'google' ) {
