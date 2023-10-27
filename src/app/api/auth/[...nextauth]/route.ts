@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from "@/app/lib/prisma";
+import { NextResponse } from "next/server";
 
 const handler = NextAuth({
     adapter : PrismaAdapter(prisma),
@@ -29,7 +30,6 @@ const handler = NextAuth({
                     }),
                 });
                 const user = await res.json();
-                console.log(res)
                 if (user) {
                     return user;
                 } else {
@@ -58,6 +58,8 @@ const handler = NextAuth({
                 const user = await res.json();
                 token.accessToken = user.accessToken;
             }
+            console.log(token)
+            console.log(user)
             return {...token, ...user};
         },
         async session({session, token, user}) {

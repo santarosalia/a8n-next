@@ -50,10 +50,10 @@ export default () => {
         setAnchorElUser(null);
     };
     const signInWithCredentials = async () => {
-        await signIn('credentials', inputs);
-    }
-    const signOutSession = async () => {
-        await signOut();
+        await fetch(`/api/signin`, {
+            method : 'POST',
+            body : JSON.stringify(inputs)
+        });
     }
     
     if (session.status === 'loading') {
@@ -106,10 +106,6 @@ export default () => {
                 <Box>
                     <Button fullWidth color="inherit" onClick={signInWithCredentials}>Signin</Button>
                     <Button fullWidth color="info" href="/signup">Signup</Button>
-                </Box>
-                <Divider><Chip label="or"></Chip></Divider>
-                <Box>
-                    <Button fullWidth onClick={() => signIn('google')}>Sign with Google</Button>
                 </Box>
             </DialogContent>
         </Dialog>
