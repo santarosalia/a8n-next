@@ -50,7 +50,7 @@ export default () => {
         setAnchorElUser(null);
     };
     const signInWithCredentials = async () => {
-        await fetch(`/api/signin`, {
+        const result = await fetch(`/api/signin`, {
             method : 'POST',
             body : JSON.stringify(inputs)
         });
