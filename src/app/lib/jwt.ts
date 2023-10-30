@@ -29,3 +29,7 @@ export const verifyJwt = (token: string) => {
       return null;
     }
 }
+
+export const decodeJwt = (payload: string) => {
+  return jwt.decode(payload);
+}

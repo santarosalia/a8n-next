@@ -14,26 +14,23 @@ export const POST = async (req: Request) => {
     
     if (user && await bcrypt.compare(body.password, user.password!)) {
         const {password, ...userWithoutPass } = user;
-        const accessToken = getAccessToken(userWithoutPass);
-        const refreshToken = getRefreshToken(userWithoutPass);
+        const {id} = userWithoutPass;
 
-        const result = {
-            ...userWithoutPass,
-            accessToken,
-            refreshToken
-        }
+        const accessToken = getAccessToken(userWithoutPass);
+        const refreshToken = getRefreshToken({id : id});
         
-        const res = new NextResponse(JSON.stringify(result));
+        const res = new NextResponse();
         
-        res.cookies.set('refreshToken', refreshToken, {
-            maxAge : 30 * 24 * 60 * 60 * 1000
+        res.cookies.set('SantaRosalia', refreshToken, {
+            maxAge : 30 * 24 * 60 * 60 * 1000,
+            httpOnly : true,
+            sameSite : 'lax'
         });
-        // res.headers.set('Set-Cookie', 'refreshToken=a');
-        // response.cookies.set('refreshToken', refreshToken, {
-        //     httpOnly : true,
-        //     maxAge : 30 * 24 * 60 * 60 * 1000
-        // })
-        // return response ;
+        res.cookies.set('LunaticMonster', accessToken, {
+            maxAge : 60 * 60 * 1000,
+            httpOnly : true,
+            sameSite : 'lax'
+        });
         return res;
-    } else return new Response(JSON.stringify(null));
+    } else return new NextResponse(JSON.stringify(null));
 }

@@ -1,4 +1,3 @@
-
 import { Box, Button, Chip, Dialog, DialogContent, Divider, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { getIsOpenSigninDialog, setIsOpenSigninDialog } from "@/redux/slices/dialog";
@@ -6,11 +5,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 export default () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-    
+
     const settings = [
         {
             name : 'Account',
@@ -50,15 +48,16 @@ export default () => {
         setAnchorElUser(null);
     };
     const signInWithCredentials = async () => {
-        const result = await fetch(`/api/signin`, {
+        await fetch(`/api/signin`, {
             method : 'POST',
             body : JSON.stringify(inputs)
         });
+        const res = await fetch(`/api/auth/user`, {
+            method : 'GET'
+        });
+        const user = await res.json();
     }
     
-    if (session.status === 'loading') {
-        return <Skeleton variant="rounded"></Skeleton>
-    }
     if (session.data?.user) {
         return (
             <Box sx={{ flexGrow: 0 }}>
