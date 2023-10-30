@@ -3,10 +3,10 @@ import { Box, Container, List, MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { fetchProcess } from "./fetch";
-import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setProcessInfos } from "@/redux/slices/process";
 import { SideMenuItem } from "@/components/styled";
+import { getUser } from "@/redux/slices/user";
 
 export default ({children}: { children: ReactNode }) => {
 
@@ -33,9 +33,9 @@ export default ({children}: { children: ReactNode }) => {
             }
         }
     ]
-    const session = useSession();
-    if (session.data?.user) {
-        fetchProcess(session.data?.user.id!).then(result => {
+    const user = useAppSelector(getUser);
+    if (user) {
+        fetchProcess(user.id!).then(result => {
             dispatch(setProcessInfos(result));
         });
     }

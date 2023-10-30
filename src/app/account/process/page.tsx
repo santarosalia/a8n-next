@@ -4,29 +4,28 @@ import { getProcessInfos, getSelected, setSelected } from "@/redux/slices/proces
 import { Box, Button, Card, CardContent, Icon, IconButton, Typography } from "@mui/material"
 import Process from "./Process";
 import { Delete } from "@mui/icons-material";
-import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/redux/slices/user";
 
 export default () => {
     const router = useRouter();
-    const session = useSession();
+    const user = useAppSelector(getUser);
     const dispatch = useDispatch();
     const processInfos = useAppSelector(getProcessInfos);
     const seleted = useAppSelector(getSelected);
     const isSelected = Object.values(seleted).find(value => value === true);
     const deleteProcess = async () => {
-        const accessToken = session!.data!.user.accessToken;
         const selectedProcessIds = Object.entries(seleted).filter(([key, value]) => value === true).map(([key]) => key);
         const res = await fetch('/api/process', {
             method : 'DELETE',
             body : JSON.stringify({
                selected : selectedProcessIds,
-               userId : session!.data!.user.id
+               userId : user?.id
             }),
             headers : {
                 "Content-Type" : "application/json",
-                "Authorization" : accessToken
+                "Authorization" : 'accessToken'
             }
         });
         if (res.ok) {

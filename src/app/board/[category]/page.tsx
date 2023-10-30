@@ -9,15 +9,14 @@ import { useEffect, useState } from "react";
 import { getPosts } from "./fetch";
 import { Post } from "@/interface/Interface";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useSession } from "next-auth/react";
+import { getUser } from "@/redux/slices/user";
 
 export default ({ params }: { params: { category: string}}) => {
     
     const searchParams = useSearchParams();
     const dispatch = useAppDispatch();
     const page = searchParams.get('page')!;
-    const session = useSession();
-    const user = session.data?.user;
+    const user = useAppSelector(getUser);
     const { category } = params;
     const router = useRouter();
     const [count, setCount] = useState(0);

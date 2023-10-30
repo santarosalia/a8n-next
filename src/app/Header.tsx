@@ -2,16 +2,18 @@
 import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
 import { EXTENSION_URL, PAGES } from "@/constants/Constants";
 import { useRouter } from "next/navigation";
-
+import { getUser } from "@/func/Func";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsLoading, setUser } from "@/redux/slices/user";
 export default () => {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -27,6 +29,12 @@ export default () => {
             router.push(url!);
         }
     };
+    useEffect(() => {
+        getUser().then(user => {
+            dispatch(setUser(user));
+            dispatch(setIsLoading(false))
+        })
+    });
 
     return (
         <AppBar position="sticky" sx={{backgroundColor : 'black'}} variant="elevation">

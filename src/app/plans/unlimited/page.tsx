@@ -5,10 +5,11 @@ import { green } from "@mui/material/colors";
 import { MouseEvent, useState } from "react";
 import { PLANS } from "@/constants/Constants";
 import { DetailPrice } from "@/interface/Interface";
-import { useSession } from "next-auth/react";
+import { useAppSelector } from "@/redux/hooks";
+import { getUser } from "@/redux/slices/user";
 
 export default () => {
-    const session = useSession();
+    const user = useAppSelector(getUser);
     const unlimitedPlan = PLANS.find(plan => plan.title === 'Unlimited');
     const detailPrices = unlimitedPlan!.detailPrices;
     const [selectedPice, setSelectedPrice] = useState<DetailPrice>(detailPrices![1]);
@@ -25,8 +26,8 @@ export default () => {
             merchant_uid: "ORD20180131-0000011",   // 주문번호
             name: "Unlimited Plan",
             amount: selectedPice?.price.ko,                         // 숫자 타입
-            buyer_email: session.data?.user.email,
-            buyer_name: session.data?.user.name,
+            buyer_email: user?.email,
+            buyer_name: user?.name,
           }, (res: {
             error_msg: string,
             imp_uid: string,

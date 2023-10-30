@@ -2,13 +2,12 @@
 import { PLANS } from "@/constants/Constants";
 import { useAppSelector } from "@/redux/hooks";
 import { getProcessInfos } from "@/redux/slices/process";
+import { getUser } from "@/redux/slices/user";
 import { Backdrop, Box, Button, CircularProgress, Divider, LinearProgress, Typography,  } from "@mui/material";
 import { green } from "@mui/material/colors";
-import { useSession } from "next-auth/react";
 
 export default () => {
-    const session = useSession();
-    const user = session.data?.user;
+    const user = useAppSelector(getUser);
     const userPlan = PLANS.find(plan => plan.level === user?.level);
     const processInfos = useAppSelector(getProcessInfos);
     const remainingCount = userPlan?.processMaxCount! - processInfos.length;

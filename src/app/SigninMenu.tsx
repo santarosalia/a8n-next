@@ -1,14 +1,15 @@
 import { Box, Button, Chip, Dialog, DialogContent, Divider, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { getIsOpenSigninDialog, setIsOpenSigninDialog } from "@/redux/slices/dialog";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { getIsLoading, getUser, setAccessToken } from "@/redux/slices/user";
 export default () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
-
+    const user = useAppSelector(getUser);
+    const isLoading = useAppSelector(getIsLoading);
     const settings = [
         {
             name : 'Account',
@@ -27,7 +28,6 @@ export default () => {
     ]
     const isOpen = useAppSelector(getIsOpenSigninDialog);
 
-    const session = useSession();
     const [inputs, setInputs] = useState({
         email : '',
         password : ''
@@ -48,21 +48,20 @@ export default () => {
         setAnchorElUser(null);
     };
     const signInWithCredentials = async () => {
-        await fetch(`/api/signin`, {
+        const res = await fetch(`/api/signin`, {
             method : 'POST',
             body : JSON.stringify(inputs)
         });
-        const res = await fetch(`/api/auth/user`, {
-            method : 'GET'
-        });
-        const user = await res.json();
+        const accessToken = await res.json();
+        dispatch(setAccessToken(accessToken));
+        console.log(user);
     }
-    
-    if (session.data?.user) {
+    if (isLoading) return <></>
+    if (user) {
         return (
             <Box sx={{ flexGrow: 0 }}>
                 <Button onClick={handleOpenUserMenu} sx={{ p: 0 }} color="inherit">
-                    {session.data?.user?.name?.toUpperCase() ?? 'User'}
+                    {user?.name.toUpperCase() ?? 'User'}
                 </Button>
                 <Menu
                 sx={{ mt: '45px' }}

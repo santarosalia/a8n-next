@@ -3,17 +3,18 @@ import { BOARD_CATEGORY } from "@/constants/Constants";
 import { BoardCategory } from "@/interface/Interface";
 import { Create } from "@mui/icons-material";
 import { Box, Button, Container, Divider, MenuItem, Select, Skeleton, TextField, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic"
 import { ChangeEvent, useEffect, useState } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { useRouter } from 'next/navigation'
+import { useAppSelector } from "@/redux/hooks";
+import { getUser } from "@/redux/slices/user";
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr : false
 });
 
 export default () => {
-    const session = useSession();
+    const user = useAppSelector(getUser);
     const router = useRouter();
     const modules = {
         toolbar: {
@@ -67,11 +68,11 @@ export default () => {
     });
     
     const createButtonOnClick = async () => {
-        const accessToken = session!.data!.user.accessToken;
+        const accessToken = 'accessToken';
         const res = await fetch('/api/board', {
             method : 'PUT',
             body : JSON.stringify({
-                userId : session.data?.user.id,
+                userId : user?.id,
                 title : title,
                 content : content,
                 category : category,

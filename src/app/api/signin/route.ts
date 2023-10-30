@@ -19,7 +19,7 @@ export const POST = async (req: Request) => {
         const accessToken = getAccessToken(userWithoutPass);
         const refreshToken = getRefreshToken({id : id});
         
-        const res = new NextResponse();
+        const res = new NextResponse(JSON.stringify(accessToken));
         
         res.cookies.set('SantaRosalia', refreshToken, {
             maxAge : 30 * 24 * 60 * 60 * 1000,
