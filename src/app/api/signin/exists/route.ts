@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/app/lib/jwt";
+import { signJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 
 export const POST = async (req: Request) => {
@@ -12,7 +12,7 @@ export const POST = async (req: Request) => {
     if (user) {
         const {password, ...userWithoutPass } = user;
 
-        const accessToken = getAccessToken(userWithoutPass);
+        const accessToken = signJwt(userWithoutPass, {expiresIn : '1h'});
         const result = {
             ...userWithoutPass,
             accessToken
