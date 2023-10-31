@@ -6,15 +6,14 @@ import Posts from "./Posts";
 import { setIsOpenSigninDialog } from "@/redux/slices/dialog";
 import { Create } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { getPosts } from "./fetch";
+import { getPosts } from "@/api/Api";
 import { Post } from "@/interface/Interface";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import { getUser } from "@/redux/slices/user";
 
 export default ({ params }: { params: { category: string}}) => {
     
     const searchParams = useSearchParams();
-    const dispatch = useAppDispatch();
     const page = searchParams.get('page')!;
     const user = useAppSelector(getUser);
     const { category } = params;
@@ -24,7 +23,7 @@ export default ({ params }: { params: { category: string}}) => {
 
     const createButtonOnClick = () => {
         if (!user) {
-            dispatch(setIsOpenSigninDialog(true));
+            router.push('/signin');
         } else {
             router.push('/board/write');
         }

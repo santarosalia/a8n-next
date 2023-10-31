@@ -68,20 +68,15 @@ export default () => {
     });
     
     const createButtonOnClick = async () => {
-        const accessToken = 'accessToken';
         const res = await fetch('/api/board', {
-            method : 'PUT',
+            method : 'POST',
             body : JSON.stringify({
                 userId : user?.id,
                 title : title,
                 content : content,
                 category : category,
                 hashtag : ['#a','#b'],
-            }),
-            headers : {
-                "Content-Type" : "application/json",
-                "Authorization" : accessToken
-            }
+            })
         });
         if (res.ok) {
             router.push('/board?cat=0&page=1');

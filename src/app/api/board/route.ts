@@ -1,15 +1,11 @@
+import { verifyAuth } from "@/api/Api";
 import { verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export const PUT = async (req: Request) => {
-    const accessToken = req.headers.get('authorization');
-    if (!accessToken || !verifyJwt(accessToken)) {
-        return new Response(JSON.stringify({
-            error : 'No Authorization'
-        }), {
-            status : 401
-        });
-    }
+export const POST = async (req: NextRequest) => {
+    // const verify = await verifyAuth(req);
+    // console.log(verify)
     const body = await req.json();
     const userId = body.userId;
     const title = body.title;
@@ -26,5 +22,5 @@ export const PUT = async (req: Request) => {
         }
     });
     
-    return new Response();
+    return new NextResponse();
 }

@@ -1,19 +1,17 @@
 import { verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 import { getMaxProcessCount } from "./func";
-import { NextResponse } from "next/server";
-import { ExecuteMessage } from "@/interface/Interface";
-import { useId } from "react";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: Request) => {
-    const accessToken = req.headers.get('authorization');
-    if (!accessToken || !verifyJwt(accessToken)) {
-        return new Response(JSON.stringify({
-            error : 'No Authorization'
-        }),{
-            status : 401
-        });
-    }
+export const POST = async (req: NextRequest) => {
+    // const accessToken = req.cookies.get('LunaticMonster');
+    // if (!accessToken || !verifyJwt(accessToken.value)) {
+    //     return new Response(JSON.stringify({
+    //         error : 'No Authorization'
+    //     }),{
+    //         status : 401
+    //     });
+    // }
     const body = await req.json();
     const id = body.id;
     const userId = body.userId;
@@ -24,17 +22,17 @@ export const POST = async (req: Request) => {
             userId : userId,
         }
     });
-    return new Response(JSON.stringify(process));
+    return new NextResponse(JSON.stringify(process));
 }
-export const PUT = async (req: Request) => {
-    const accessToken = req.headers.get('authorization');
-    if (!accessToken || !verifyJwt(accessToken)) {
-        return new Response(JSON.stringify({
-            error : 'No Authorization'
-        }),{
-            status : 401
-        });
-    }
+export const PUT = async (req: NextRequest) => {
+    // const accessToken = req.headers.get('authorization');
+    // if (!accessToken || !verifyJwt(accessToken)) {
+    //     return new Response(JSON.stringify({
+    //         error : 'No Authorization'
+    //     }),{
+    //         status : 401
+    //     });
+    // }
     const body: {
         name: string,
         data: string,
@@ -75,7 +73,7 @@ export const PUT = async (req: Request) => {
         });
         const isFull = maxProcessCount <= currentProcessCount;
         if (isFull) {
-            return new Response(JSON.stringify({
+            return new NextResponse(JSON.stringify({
                 error : 'process limit'
             }),{
                 status : 400
@@ -91,17 +89,17 @@ export const PUT = async (req: Request) => {
         }
     }
     
-    return new Response(JSON.stringify(true));
+    return new NextResponse(JSON.stringify(true));
 }
-export const DELETE = async (req: Request) => {
-    const accessToken = req.headers.get('authorization');
-    if (!accessToken || !verifyJwt(accessToken)) {
-        return new Response(JSON.stringify({
-            error : 'No Authorization'
-        }),{
-            status : 401
-        });
-    }
+export const DELETE = async (req: NextRequest) => {
+    // const accessToken = req.headers.get('authorization');
+    // if (!accessToken || !verifyJwt(accessToken)) {
+    //     return new Response(JSON.stringify({
+    //         error : 'No Authorization'
+    //     }),{
+    //         status : 401
+    //     });
+    // }
     const body: {
         selected: string[],
         userId: string

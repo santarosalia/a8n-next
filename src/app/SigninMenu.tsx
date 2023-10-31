@@ -1,10 +1,11 @@
-import { Box, Button, Chip, Dialog, DialogContent, Divider, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
-import { signIn, signOut } from "next-auth/react";
+import { Box, Button, Chip, Dialog, DialogContent, Divider, IconButton, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
 import { getIsOpenSigninDialog, setIsOpenSigninDialog } from "@/redux/slices/dialog";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getIsLoading, getUser, setAccessToken } from "@/redux/slices/user";
+import { getIsLoading, getUser, setAccessToken, setUser } from "@/redux/slices/user";
+import { AccountCircle, Login } from "@mui/icons-material";
+import { deleteAccessToken, deleteRefreshToken } from "@/api/Api";
 export default () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -21,8 +22,12 @@ export default () => {
         {
             name : 'Signout',
             onClick : () => {
-                signOut();
-                // handleCloseUserMenu();
+                Promise.all([
+                    deleteAccessToken(),
+                    deleteRefreshToken()
+                ]);
+                dispatch(setUser(null));
+                handleCloseUserMenu();
             }
         }
     ]
@@ -54,15 +59,14 @@ export default () => {
         });
         const accessToken = await res.json();
         dispatch(setAccessToken(accessToken));
-        console.log(user);
     }
-    if (isLoading) return <></>
+    if (isLoading) return <Skeleton width={24}></Skeleton>
     if (user) {
         return (
             <Box sx={{ flexGrow: 0 }}>
-                <Button onClick={handleOpenUserMenu} sx={{ p: 0 }} color="inherit">
-                    {user?.name.toUpperCase() ?? 'User'}
-                </Button>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} color="inherit" size="large">
+                    <AccountCircle/>
+                </IconButton>
                 <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -89,25 +93,9 @@ export default () => {
         )
     }
     return (
-        <>
-        <Button onClick={() => dispatch(setIsOpenSigninDialog(true))} color="inherit">
-            Signin
-        </Button>
-        <Dialog open={isOpen} onClose={() => dispatch(setIsOpenSigninDialog(false))}>
-            <DialogContent>
-                <Box>
-                    <InputLabel htmlFor="email" size="normal">Email</InputLabel>
-                    <TextField id="email" size="small" required value={email} type={"email"} onChange={onChange}></TextField>
-                    <InputLabel htmlFor="password">Password</InputLabel>
-                    <TextField id="password" size="small" required value={password} type={"password"} onChange={onChange}></TextField>
-                </Box>
-                <Box>
-                    <Button fullWidth color="inherit" onClick={signInWithCredentials}>Signin</Button>
-                    <Button fullWidth color="info" href="/signup">Signup</Button>
-                </Box>
-            </DialogContent>
-        </Dialog>
-        </>
+        <IconButton onClick={() => router.push('/signin')} color="inherit">
+            <Login/>
+        </IconButton>
     )
     
 }

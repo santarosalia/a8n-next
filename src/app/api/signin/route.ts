@@ -1,4 +1,4 @@
-import { getAccessToken, getRefreshToken } from "@/app/lib/jwt";
+import { signJwt, verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 import * as bcrypt from 'bcrypt';
 import { NextResponse } from "next/server";
@@ -16,9 +16,35 @@ export const POST = async (req: Request) => {
         const {password, ...userWithoutPass } = user;
         const {id} = userWithoutPass;
 
-        const accessToken = getAccessToken(userWithoutPass);
-        const refreshToken = getRefreshToken({id : id});
-        
+        const accessToken = signJwt(userWithoutPass, {expiresIn : '1h'});
+        const refreshToken = signJwt({userId : id}, {expiresIn : '30d'});
+        const { exp } = verifyJwt(refreshToken)!;
+        const existsRefreshToken = await prisma.refreshToken.findUnique({
+            where : {
+                userId : id
+            }
+        });
+
+        if (existsRefreshToken) {
+            await prisma.refreshToken.update({
+                where : {
+                    userId : id
+                },
+                data : {
+                    token : refreshToken,
+                    expires : exp
+                }
+            });
+        } else {
+            await prisma.refreshToken.create({
+                data : {
+                    userId : id,
+                    token : refreshToken,
+                    expires : exp
+                }
+            });
+        }
+
         const res = new NextResponse(JSON.stringify(accessToken));
         
         res.cookies.set('SantaRosalia', refreshToken, {

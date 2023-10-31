@@ -7,9 +7,10 @@ import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
 import { EXTENSION_URL, PAGES } from "@/constants/Constants";
 import { useRouter } from "next/navigation";
-import { getUser } from "@/func/Func";
+import { getAccessToken } from "@/api/Api";
 import { useAppDispatch } from "@/redux/hooks";
 import { setIsLoading, setUser } from "@/redux/slices/user";
+import { decodeJwt } from "./lib/jwt";
 export default () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -26,15 +27,16 @@ export default () => {
         if (url === EXTENSION_URL) {
             window.open(url);
         } else {
-            router.push(url!);
+            router.push(url);
         }
     };
     useEffect(() => {
-        getUser().then(user => {
+        getAccessToken().then(accessToken => {
+            const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
             dispatch(setUser(user));
-            dispatch(setIsLoading(false))
-        })
-    });
+            dispatch(setIsLoading(false));
+        }).catch(e => dispatch(setIsLoading(false)));
+    }, []);
 
     return (
         <AppBar position="sticky" sx={{backgroundColor : 'black'}} variant="elevation">
@@ -46,9 +48,6 @@ export default () => {
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                     <IconButton
                     size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
                     onClick={handleOpenNavMenu}
                     color="inherit"
                     >
