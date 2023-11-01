@@ -17,8 +17,6 @@ export const GET = async () => {
     });
     const isVerified = verifyJwt(refreshToken.value);
     const isEqual = refreshToken.value === result?.token;
-    console.log(isVerified);
-    console.log(isEqual);
     if (!isVerified) return new NextResponse(JSON.stringify({error : 'Token Expired'}), {status : 401});
     else if (!isEqual) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
     else if (isVerified && isEqual) {
@@ -55,10 +53,4 @@ export const GET = async () => {
         });
         return res;
     }
-}
-
-export const POST = async (req: NextRequest) => {
-    const refreshToken = req.cookies.get('SantaRosalia');
-    console.log(refreshToken);
-    
 }

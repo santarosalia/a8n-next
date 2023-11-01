@@ -21,7 +21,9 @@ export const DELETE = async () => {
         userId: string,
         iat: number,
         exp: number
-    } = JSON.parse(JSON.stringify(decodeJwt(refreshToken?.value!)));
+    } | null = JSON.parse(JSON.stringify(decodeJwt(refreshToken?.value!)));
+
+    if (decoded === null) return new NextResponse();
     const { userId } = decoded;
     
     const count = await prisma.refreshToken.count({

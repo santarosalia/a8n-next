@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { ExecuteMessage, ProcessInfo } from "@/interface/Interface";
 import { decodeJwt } from "@/app/lib/jwt";
+import { JwtPayload } from "jsonwebtoken";
 
 type InitialState = {
     user: {
@@ -31,9 +32,9 @@ const slice = createSlice({
       state.user = action.payload;
     },
     setAccessToken: (state, action) => {
-      const accessToken = action.payload;
+      const accessToken = action.payload as string | null;
       state.accessToken = accessToken;
-      const decoded = decodeJwt(accessToken);
+      const decoded = decodeJwt(accessToken!);
       const user = JSON.parse(JSON.stringify(decoded));
       state.user = user;
     },

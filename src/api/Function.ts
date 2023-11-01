@@ -1,48 +1,18 @@
-import { getAccessToken } from "@/api/Api";
-import { NextResponse } from "next/server";
+import { deleteAccessToken, getAccessToken, getRefreshToken } from "@/api/Api";
+import { decodeJwt } from "@/app/lib/jwt";
 
-export const auth = async () => {
+export const authorization = async () => {
     const accessToken = await getAccessToken();
     if (accessToken) {
-
+        const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
+        return user;
+    } else {
+        const accessToken = await getRefreshToken();
+        if (accessToken) {
+            const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
+            return user;
+        }
     }
-    
-    
-    
-    // .then(accessToken => {
-    //     const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
-    //     dispatch(setUser(user));
-    //     dispatch(setIsLoading(false));
-    // }).catch((e: NextResponse) => {
-    //     switch (e.status) {
-    //         case 401 : {
-    //             getRefreshToken().then(accessToken => {
-    //                 const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
-    //                 dispatch(setUser(user));
-    //                 dispatch(setIsLoading(false));
-    //             }).catch((e: NextResponse) => {
-    //                 switch (e.status) {
-    //                     case 401 : {
-    //                         deleteAccessToken().then(() => {
-    //                             dispatch(setUser(null));
-    //                             dispatch(setIsLoading(false));
-    //                         });
-    //                     }
-    //                 }
-    //             });
-    //             break;
-    //         }
-    //         case 404 : {
-    //             dispatch(setUser(null));
-    //             dispatch(setIsLoading(false));
-    //             break;
-    //         }
-    //         default : {
-    //             dispatch(setUser(null));
-    //             dispatch(setIsLoading(false));
-    //             break;
-    //         }
-    //     }
-        
-    // });
+    await deleteAccessToken();
+    return null;
 }

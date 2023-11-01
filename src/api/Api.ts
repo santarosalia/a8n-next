@@ -1,43 +1,49 @@
 import { Post } from "@/interface/Interface";
+import { JwtPayload } from "jsonwebtoken";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
-/**
- * @client
- */
 export const getAccessToken = async () => {
-    const res = await fetch(`/api/auth/accesstoken`, {
-        method : 'GET'
+    try {
+        const res = await fetch(`/api/auth/accesstoken`, {
+            method : 'GET'
+        });
+        const result: RequestCookie = await res.json();
+        return result;
+    } catch {
+        return null;
+    }
+}
+
+export const signIn = async (inputs: {
+    email: string,
+    password: string
+}) => {
+    const res = await fetch(`/api/signin`, {
+        method : 'POST',
+        body : JSON.stringify(inputs)
     });
-    if (!res.ok) return null;
-    const result: RequestCookie = await res.json();
-    
-    return result;
+    const accessToken: string | null = await res.json();
+    return accessToken;
 }
 
 export const getRefreshToken = async () => {
-    const res = await fetch(`/api/auth/refreshtoken`, {
-        method : 'GET'
-    });
-    if (!res.ok) throw res;
-    const result: RequestCookie = await res.json();
-    return result;
+    try {
+        const res = await fetch(`/api/auth/refreshtoken`, {
+            method : 'GET'
+        });
+        const result: RequestCookie = await res.json();
+        return result;
+    } catch {
+        return null;
+    }
 }
 
-/**
- * @client
- */
 export const deleteAccessToken = async () => {
     await fetch('/api/auth/accesstoken', {
         method : 'DELETE'
     });
 }
 
-/**
- * @client
- * @param category 
- * @param page 
- * @returns 
- */
 export const getPosts = async (category:string, page: number) => {
     const res = await fetch(`/api/board/${category}/?page=${page}`, {
         method : 'GET'
