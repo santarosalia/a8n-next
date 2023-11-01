@@ -33,15 +33,6 @@ export const deleteAccessToken = async () => {
 
 /**
  * @client
- */
-export const deleteRefreshToken = async () => {
-    await fetch('/api/auth/refreshtoken', {
-        method : 'DELETE'
-    });
-}
-
-/**
- * @client
  * @param category 
  * @param page 
  * @returns 

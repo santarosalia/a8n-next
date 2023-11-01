@@ -5,7 +5,7 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getIsLoading, getUser, setAccessToken, setUser } from "@/redux/slices/user";
 import { AccountCircle, Login } from "@mui/icons-material";
-import { deleteAccessToken, deleteRefreshToken } from "@/api/Api";
+import { deleteAccessToken } from "@/api/Api";
 export default () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -22,10 +22,7 @@ export default () => {
         {
             name : 'Signout',
             onClick : () => {
-                Promise.all([
-                    deleteAccessToken(),
-                    deleteRefreshToken()
-                ]);
+                deleteAccessToken();
                 dispatch(setUser(null));
                 handleCloseUserMenu();
             }

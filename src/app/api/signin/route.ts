@@ -18,13 +18,13 @@ export const POST = async (req: Request) => {
 
         const accessToken = signJwt(userWithoutPass, {expiresIn : '1h'});
         const refreshToken = signJwt({userId : id}, {expiresIn : '30d'});
-        const existsRefreshToken = await prisma.refreshToken.findUnique({
+        const isExistsRefreshToken = await prisma.refreshToken.findUnique({
             where : {
                 userId : id
             }
         });
 
-        if (existsRefreshToken) {
+        if (isExistsRefreshToken) {
             await prisma.refreshToken.update({
                 where : {
                     userId : id

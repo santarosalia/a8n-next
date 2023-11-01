@@ -17,7 +17,6 @@ export const GET = async () => {
     });
     const isVerified = verifyJwt(refreshToken.value);
     const isEqual = refreshToken.value === result?.token
-    
     if (!isVerified) return new NextResponse(JSON.stringify({error : 'Token Expired'}), {status : 401});
     else if (isVerified && isEqual) {
         const user = result.user;
@@ -36,7 +35,10 @@ export const GET = async () => {
             }
         });
 
-        const res = new NextResponse(JSON.stringify(accessToken));
+        const res = new NextResponse(JSON.stringify({
+            name : 'LunaticMonster',
+            value : accessToken
+        }));
         
         res.cookies.set('SantaRosalia', refreshToken, {
             maxAge : 30 * 24 * 60 * 60 * 1000,
@@ -50,17 +52,10 @@ export const GET = async () => {
         });
         return res;
     }
-    return new NextResponse(JSON.stringify(refreshToken));
 }
 
 export const POST = async (req: NextRequest) => {
     const refreshToken = req.cookies.get('SantaRosalia');
     console.log(refreshToken);
     
-}
-
-export const DELETE = async () => {
-    const cookie = cookies();
-    cookie.delete('SantaRosalia');
-    return new NextResponse();
 }
