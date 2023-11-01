@@ -7,7 +7,7 @@ import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
 import { EXTENSION_URL, PAGES } from "@/constants/Constants";
 import { useRouter } from "next/navigation";
-import { getAccessToken, getRefreshToken } from "@/api/Api";
+import { deleteAccessToken, getAccessToken, getRefreshToken } from "@/api/Api";
 import { useAppDispatch } from "@/redux/hooks";
 import { setIsLoading, setUser } from "@/redux/slices/user";
 import { decodeJwt } from "./lib/jwt";
@@ -43,6 +43,15 @@ export default () => {
                         const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
                         dispatch(setUser(user));
                         dispatch(setIsLoading(false));
+                    }).catch((e: NextResponse) => {
+                        switch (e.status) {
+                            case 401 : {
+                                deleteAccessToken().then(() => {
+                                    dispatch(setUser(null));
+                                    dispatch(setIsLoading(false));
+                                });
+                            }
+                        }
                     });
                     break;
                 }

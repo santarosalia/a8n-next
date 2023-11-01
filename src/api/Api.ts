@@ -8,8 +8,9 @@ export const getAccessToken = async () => {
     const res = await fetch(`/api/auth/accesstoken`, {
         method : 'GET'
     });
-    if (!res.ok) throw res;
+    if (!res.ok) return null;
     const result: RequestCookie = await res.json();
+    
     return result;
 }
 

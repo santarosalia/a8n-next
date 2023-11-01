@@ -1,4 +1,4 @@
-import { verifyJwt } from '@/app/lib/jwt';
+import { decodeJwt, verifyJwt } from '@/app/lib/jwt';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
@@ -17,16 +17,25 @@ export const DELETE = async () => {
     cookie.delete('LunaticMonster');
     const refreshToken = cookie.get('SantaRosalia');
     cookie.delete('SantaRosalia');
-    const result = await prisma.refreshToken.findFirst({
-        where : {
-            token : refreshToken?.value!
-        }
-    });
-    const userId = result?.userId;
-    await prisma.refreshToken.delete({
+    const decoded : {
+        userId: string,
+        iat: number,
+        exp: number
+    } = JSON.parse(JSON.stringify(decodeJwt(refreshToken?.value!)));
+    const { userId } = decoded;
+    
+    const count = await prisma.refreshToken.count({
         where : {
             userId : userId
         }
     });
+
+    if (count > 0) {
+        await prisma.refreshToken.delete({
+            where : {
+                userId : userId
+            }
+        });
+    }
     return new NextResponse();
 }
