@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { verifyJwtByJose } from "./app/lib/jwt";
-
 const url = process.env.NEXTAUTH_URL;
 export const middleware = async (req: NextRequest) => {
     const accessToken = req.cookies.get('LunaticMonster');
@@ -23,23 +21,6 @@ export const middleware = async (req: NextRequest) => {
         
         // case '/account/overview' : 
         case '/board/write' : {
-            const d = await fetch(`${url}/api/auth/refreshtoken`, {
-                method : 'POST'
-            });
-            // console.log(await d.json())
-            const verify = await verifyJwtByJose(accessToken?.value!);
-            if (verify) {
-                return NextResponse.next();
-            } else {
-                const verify = await verifyJwtByJose(refreshToken?.value!);
-                if (verify) {
-                    await fetch('/api/auth/refreshtoken', {
-                        method : 'POST'
-                    });
-                } else {
-
-                }
-            }
             break;
             // if (!session) return NextResponse.redirect(new URL('/', req.url));
         }

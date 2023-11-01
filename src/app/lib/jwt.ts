@@ -13,25 +13,14 @@ export const signJwt = (payload: JwtPayload, options: SignOption) => {
 export const verifyJwt = (token: string) => {
     try {
       const secret_key = process.env.SECRET_KEY;
-      const verify = jwt.verify(token, secret_key!);
-      return verify as JwtPayload;
+      jwt.verify(token, secret_key!);
+      return true;
     } catch (error) {
       console.log(error);
-      return null;
+      return false;
     }
 }
 
 export const decodeJwt = (payload: string) => {
   return jwt.decode(payload);
-}
-
-export const verifyJwtByJose = async (token: string) => {
-  try {
-    const secret_key = process.env.SECRET_KEY;
-    const verify = await jwtVerify(token, new TextEncoder().encode(secret_key!));
-    return verify;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 }

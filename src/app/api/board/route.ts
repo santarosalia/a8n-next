@@ -1,5 +1,3 @@
-import { verifyAuth } from "@/api/Api";
-import { verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 

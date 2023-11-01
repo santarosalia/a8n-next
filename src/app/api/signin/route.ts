@@ -1,4 +1,4 @@
-import { signJwt, verifyJwt } from "@/app/lib/jwt";
+import { signJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
 import * as bcrypt from 'bcrypt';
 import { NextResponse } from "next/server";
@@ -18,7 +18,6 @@ export const POST = async (req: Request) => {
 
         const accessToken = signJwt(userWithoutPass, {expiresIn : '1h'});
         const refreshToken = signJwt({userId : id}, {expiresIn : '30d'});
-        const { exp } = verifyJwt(refreshToken)!;
         const existsRefreshToken = await prisma.refreshToken.findUnique({
             where : {
                 userId : id
@@ -32,7 +31,6 @@ export const POST = async (req: Request) => {
                 },
                 data : {
                     token : refreshToken,
-                    expires : exp
                 }
             });
         } else {
@@ -40,7 +38,6 @@ export const POST = async (req: Request) => {
                 data : {
                     userId : id,
                     token : refreshToken,
-                    expires : exp
                 }
             });
         }
