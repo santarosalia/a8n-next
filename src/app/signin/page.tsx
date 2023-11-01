@@ -27,7 +27,7 @@ export default () => {
         const accessToken = await signIn(inputs);
         if (accessToken) {
             // extension login 처리
-            chrome?.runtime?.sendMessage('dcobchnbngpnegehpbpgahimlgadklca', {});
+            // chrome?.runtime?.sendMessage('dcobchnbngpnegehpbpgahimlgadklca', {});
             dispatch(setAccessToken(accessToken));
             router.back();
         }
