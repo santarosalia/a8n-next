@@ -1,15 +1,15 @@
 'use client';
-import { isExistsCrx, signIn } from "@/api/Api";
+import { isExistsCrx, signIn, signInCrx } from "@/api/Api";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { getUser, setAccessToken } from "@/redux/slices/user";
+import { setUser } from "@/redux/slices/user";
 import { Box, Button, Card, CardContent, Container, InputLabel, TextField } from "@mui/material"
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
+import { decodeJwt } from "../lib/jwt";
 
 export default () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const user = useAppSelector(getUser);
     const [inputs, setInputs] = useState({
         email : '',
         password : ''
@@ -27,12 +27,12 @@ export default () => {
     const onClickSignIn = async () => {
         const accessToken = await signIn(inputs);
         if (accessToken) {
-            // extension login 처리
-            dispatch(setAccessToken(accessToken));
+            const user = JSON.parse(JSON.stringify(decodeJwt(accessToken)));
+            dispatch(setUser(user));
             
             const isExists = await isExistsCrx();
             if (isExists) {
-                
+                await signInCrx(user);
             }
             router.back();
         }

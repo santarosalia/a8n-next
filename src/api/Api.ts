@@ -1,7 +1,5 @@
 import { CRX_COMMAND, CRX_RECEIVER, EXTENSION_ID } from "@/constants/Constants";
 import { Post } from "@/interface/Interface";
-import { useAppSelector } from "@/redux/hooks";
-import { getUser } from "@/redux/slices/user";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export const getAccessToken = async () => {
@@ -60,10 +58,9 @@ export const isExistsCrx = async () => {
     return result;
 }
 
-export const signInCrx = async () => {
+export const signInCrx = async (user: any) => {
     if (!chrome || !chrome.runtime) return;
-    const user = useAppSelector(getUser);
-    const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_CHECK_LUNATIC_MONSTER, user);
+    const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_SIGN_IN_LUNATIC_MONSTER, JSON.stringify(user));
     return result;
 }
 

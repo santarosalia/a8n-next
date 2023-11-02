@@ -13,13 +13,11 @@ export type UserState = {
         createdAt: string
         updatedAt: string
     } | null
-    accessToken: string | null
     isLoading: boolean
 };
 
 const initialState: UserState = {
     user : null,
-    accessToken : null,
     isLoading : true
 };
 const slice = createSlice({
@@ -29,13 +27,6 @@ const slice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setAccessToken: (state, action) => {
-      const accessToken = action.payload as string | null;
-      state.accessToken = accessToken;
-      const decoded = decodeJwt(accessToken!);
-      const user = JSON.parse(JSON.stringify(decoded));
-      state.user = user;
-    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     }
@@ -43,7 +34,6 @@ const slice = createSlice({
 });
 
 export default slice;
-export const { setUser, setAccessToken, setIsLoading } = slice.actions;
+export const { setUser, setIsLoading } = slice.actions;
 export const getUser = (state: RootState) => state.user.user;
-export const getAccessToken = (state: RootState) => state.user.accessToken;
 export const getIsLoading = (state: RootState) => state.user.isLoading;

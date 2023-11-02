@@ -1,5 +1,5 @@
 'use client';
-import { AppBar, Toolbar, Box, Container, Menu, Avatar, Button, Tooltip, IconButton, MenuItem, Typography} from "@mui/material";
+import { AppBar, Toolbar, Box, Container, Menu, IconButton, MenuItem, Typography} from "@mui/material";
 import Image from "next/image";
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
@@ -7,11 +7,8 @@ import Link from "next/link";
 import SigninMenu from "@/app/SigninMenu";
 import { EXTENSION_URL, PAGES } from "@/constants/Constants";
 import { useRouter } from "next/navigation";
-import { deleteAccessToken, getAccessToken, getRefreshToken } from "@/api/Api";
 import { useAppDispatch } from "@/redux/hooks";
 import { setIsLoading, setUser } from "@/redux/slices/user";
-import { decodeJwt } from "./lib/jwt";
-import { NextResponse } from "next/server";
 import { authorization } from "@/api/Function";
 export default () => {
     const router = useRouter();

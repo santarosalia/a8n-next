@@ -1,9 +1,8 @@
-import { Box, Button, Chip, Dialog, DialogContent, Divider, IconButton, InputLabel, Menu, MenuItem, Skeleton, TextField, Tooltip, Typography } from "@mui/material";
-import { getIsOpenSigninDialog, setIsOpenSigninDialog } from "@/redux/slices/dialog";
+import { Box, IconButton, Menu, MenuItem, Skeleton, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getIsLoading, getUser, setAccessToken, setUser } from "@/redux/slices/user";
+import { getIsLoading, getUser, setUser } from "@/redux/slices/user";
 import { AccountCircle, Login } from "@mui/icons-material";
 import { deleteAccessToken } from "@/api/Api";
 export default () => {
@@ -28,20 +27,7 @@ export default () => {
             }
         }
     ]
-    const isOpen = useAppSelector(getIsOpenSigninDialog);
 
-    const [inputs, setInputs] = useState({
-        email : '',
-        password : ''
-    });
-    const {email, password} = inputs;
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const {id, value} = e.target;
-        setInputs({
-            ...inputs,
-            [id] : value
-        });
-    } 
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -49,14 +35,6 @@ export default () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    const signInWithCredentials = async () => {
-        const res = await fetch(`/api/signin`, {
-            method : 'POST',
-            body : JSON.stringify(inputs)
-        });
-        const accessToken = await res.json();
-        dispatch(setAccessToken(accessToken));
-    }
     if (isLoading) return <Skeleton width={24}></Skeleton>
     if (user) {
         return (
