@@ -31,6 +31,7 @@ export default () => {
             dispatch(setUser(user));
             
             const isExists = await isExistsCrx();
+            console.log(isExists)
             if (isExists) {
                 await signInCrx(user);
             }

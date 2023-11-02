@@ -3,15 +3,12 @@ import { Post } from "@/interface/Interface";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export const getAccessToken = async () => {
-    try {
-        const res = await fetch(`/api/auth/accesstoken`, {
-            method : 'GET'
-        });
-        const result: RequestCookie = await res.json();
-        return result;
-    } catch {
-        return null;
-    }
+    const res = await fetch(`/api/auth/accesstoken`, {
+        method : 'GET'
+    });
+    if (!res.ok) return null;
+    const result: RequestCookie = await res.json();
+    return result;
 }
 
 export const signIn = async (inputs: {
@@ -27,15 +24,12 @@ export const signIn = async (inputs: {
 }
 
 export const getRefreshToken = async () => {
-    try {
-        const res = await fetch(`/api/auth/refreshtoken`, {
-            method : 'GET'
-        });
-        const result: RequestCookie = await res.json();
-        return result;
-    } catch {
-        return null;
-    }
+    const res = await fetch(`/api/auth/refreshtoken`, {
+        method : 'GET'
+    });
+    if (!res.ok) return null;
+    const result: RequestCookie = await res.json();
+    return result;
 }
 
 export const deleteAccessToken = async () => {
@@ -54,6 +48,7 @@ export const getPosts = async (category:string, page: number) => {
 
 export const isExistsCrx = async () => {
     if (!chrome || !chrome.runtime) return false;
+    console.log(chrome.runtime)
     const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_CHECK_LUNATIC_MONSTER);
     return result;
 }
