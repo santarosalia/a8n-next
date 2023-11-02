@@ -7,7 +7,7 @@ export const BOARD_CATEGORY = {
     [BoardCategory.SHARE] : 'share'
 }
 
-export const EXTENSION_ID = 'cfoccihaknngbcniilfkeebigdnoonnh';
+export const EXTENSION_ID = process.env.NEXT_PUBLIC_EXTENSION_ID;
 
 export const EXTENSION_URL = 'https://chrome.google.com/webstore/detail/a8n/cfoccihaknngbcniilfkeebigdnoonnh';
 
@@ -94,3 +94,10 @@ export const PAGES = [{
     name : 'Get Extension',
     url : EXTENSION_URL
 }];
+export enum CRX_RECEIVER {
+    SERVICE_WORKER = 'SERVICE_WORKER'
+}
+export enum CRX_COMMAND {
+    CMD_CHECK_LUNATIC_MONSTER = 'CMD_CHECK_LUNATIC_MONSTER',
+    CMD_SIGN_IN_LUNATIC_MONSTER = 'CMD_SIGN_IN_LUNATIC_MONSTER'
+}

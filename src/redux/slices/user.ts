@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { ExecuteMessage, ProcessInfo } from "@/interface/Interface";
 import { decodeJwt } from "@/app/lib/jwt";
-import { JwtPayload } from "jsonwebtoken";
 
-type InitialState = {
+export type UserState = {
     user: {
         id: string
         name: string
@@ -19,7 +17,7 @@ type InitialState = {
     isLoading: boolean
 };
 
-const initialState: InitialState = {
+const initialState: UserState = {
     user : null,
     accessToken : null,
     isLoading : true

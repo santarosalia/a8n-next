@@ -1,7 +1,7 @@
 'use client';
-import { signIn } from "@/api/Api";
-import { useAppDispatch } from "@/redux/hooks";
-import { setAccessToken } from "@/redux/slices/user";
+import { isExistsCrx, signIn } from "@/api/Api";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { getUser, setAccessToken } from "@/redux/slices/user";
 import { Box, Button, Card, CardContent, Container, InputLabel, TextField } from "@mui/material"
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -9,6 +9,7 @@ import { ChangeEvent, useState } from "react";
 export default () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const user = useAppSelector(getUser);
     const [inputs, setInputs] = useState({
         email : '',
         password : ''
@@ -27,8 +28,12 @@ export default () => {
         const accessToken = await signIn(inputs);
         if (accessToken) {
             // extension login 처리
-            // chrome?.runtime?.sendMessage('dcobchnbngpnegehpbpgahimlgadklca', {});
             dispatch(setAccessToken(accessToken));
+            
+            const isExists = await isExistsCrx();
+            if (isExists) {
+                
+            }
             router.back();
         }
     }
