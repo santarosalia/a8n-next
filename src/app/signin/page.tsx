@@ -1,5 +1,5 @@
 'use client';
-import { isExistsCrx, signIn, signInCrx } from "@/api/Api";
+import { getRefreshToken, isExistsCrx, signIn, signInCrx } from "@/api/Api";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/user";
 import { Box, Button, Card, CardContent, Container, InputLabel, TextField } from "@mui/material"
@@ -31,7 +31,7 @@ export default () => {
             dispatch(setUser(user));
             const isExists = await isExistsCrx();
             if (isExists) {
-                await signInCrx(user);
+                await signInCrx();
             }
             router.back();
         }

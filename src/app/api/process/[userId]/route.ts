@@ -1,21 +1,16 @@
+import { getRefreshToken } from "@/api/Api";
 import { verifyJwt } from "@/app/lib/jwt";
 import prisma from "@/app/lib/prisma";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, { params }: {
     params: {
         userId: string
     }
 }) => {
-    // const accessToken = req.headers.get('authorization');
-    // if (!accessToken || !verifyJwt(accessToken)) {
-    //     return new Response(JSON.stringify({
-    //         error : 'No Authorization'
-    //     }),{
-    //         status : 401
-    //     });
-    // }
-
+    const refreshToken = req.cookies.get('SantaRosalia');
+    const isVerified = verifyJwt(refreshToken?.value!);
+    if (!isVerified) return new NextResponse(JSON.stringify({error : 'Token Expired'}), {status : 401});
     const process = await prisma.process.findMany({
         where : {
             userId : params.userId,
@@ -25,5 +20,5 @@ export const GET = async (req: NextRequest, { params }: {
             name : true
         }
     });
-    return new Response(JSON.stringify(process));
+    return new NextResponse(JSON.stringify(process));
 }

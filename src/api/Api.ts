@@ -61,9 +61,10 @@ export const isExistsCrx = async () => {
     return result;
 }
 
-export const signInCrx = async (user: any) => {
+export const signInCrx = async () => {
     if (!chrome || !chrome.runtime) return;
-    const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_SIGN_IN_LUNATIC_MONSTER, JSON.stringify(user));
+    const refreshToken = await getRefreshToken();
+    const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_SIGN_IN_LUNATIC_MONSTER, JSON.stringify(refreshToken?.value));
     return result;
 }
 
