@@ -24,6 +24,7 @@ export default () => {
                 deleteAccessToken();
                 dispatch(setUser(null));
                 handleCloseUserMenu();
+                router.push('/');
             }
         }
     ]

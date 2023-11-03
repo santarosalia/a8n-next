@@ -7,7 +7,8 @@ export const GET = async (req: NextRequest, { params }: {
         userId: string
     }
 }) => {
-    await crxAuthorization(req);
+    const userId = await crxAuthorization(req);
+    if (userId !== params.userId) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
     const process = await prisma.process.findMany({
         where : {
             userId : params.userId,

@@ -23,11 +23,14 @@ export const authorization = async () => {
 export const crxAuthorization = async (req: NextRequest) => {
     const refreshToken = req.cookies.get('SantaRosalia');
     const isVerified = verifyJwt(refreshToken?.value!);
-    if (!isVerified) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
+    if (!isVerified) throw new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
     const result = await prisma.refreshToken.findFirst({
         where : {
             token : refreshToken?.value
         }
     });
-    if (result === null) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
+    if (result === null) throw new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
+    const decoded = decodeJwt(refreshToken?.value!);
+    const { userId }: { userId: string } = JSON.parse(JSON.stringify(decoded));
+    return userId;
 }

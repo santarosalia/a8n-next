@@ -5,13 +5,14 @@ import { getSelected, setSelected } from "@/redux/slices/process";
 import { CheckCircle, Circle, CircleOutlined } from "@mui/icons-material";
 import { Box, Button, Card, CardActions, CardContent, Typography } from "@mui/material"
 import { purple } from "@mui/material/colors";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default ({process}: {process: ProcessInfo}) => {
     const [showCircle, setShowCircle] = useState(false);
     const dispatch = useAppDispatch();
     const selected = useAppSelector(getSelected);
-
+    const router = useRouter();
     const cardOnClick = (process: ProcessInfo) => {
         dispatch(setSelected({
             ...selected,
@@ -19,7 +20,7 @@ export default ({process}: {process: ProcessInfo}) => {
         }))
     }
     const showDetail = (process: ProcessInfo) => {
-
+        router.push(`/account/process/${process.id}`);
     }
 
     return (

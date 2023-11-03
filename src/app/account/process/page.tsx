@@ -22,11 +22,7 @@ export default () => {
             body : JSON.stringify({
                selected : selectedProcessIds,
                userId : user?.id
-            }),
-            headers : {
-                "Content-Type" : "application/json",
-                "Authorization" : 'accessToken'
-            }
+            })
         });
         if (res.ok) {
             router.refresh();

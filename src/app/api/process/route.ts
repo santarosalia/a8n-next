@@ -1,14 +1,12 @@
 import prisma from "@/app/lib/prisma";
 import { getMaxProcessCount } from "./func";
 import { NextRequest, NextResponse } from "next/server";
-import { verifyJwt } from "@/app/lib/jwt";
 import { crxAuthorization } from "@/api/Function";
 
 export const POST = async (req: NextRequest) => {
-    await crxAuthorization(req);
+    const userId = await crxAuthorization(req);
     const body = await req.json();
     const id = body.id;
-    const userId = body.userId;
 
     const process = await prisma.process.findUnique({
         where : {
@@ -19,7 +17,7 @@ export const POST = async (req: NextRequest) => {
     return new NextResponse(JSON.stringify(process));
 }
 export const PUT = async (req: NextRequest) => {
-    await crxAuthorization(req);
+    const userId = await crxAuthorization(req);
     const body: {
         name: string,
         data: string,
@@ -27,7 +25,6 @@ export const PUT = async (req: NextRequest) => {
     } = await req.json();
     const name = body.name;
     const data = body.data;
-    const userId = body.userId;
 
     const user = await prisma.user.findUnique({
         where : {
@@ -79,12 +76,12 @@ export const PUT = async (req: NextRequest) => {
     return new NextResponse(JSON.stringify(true));
 }
 export const DELETE = async (req: NextRequest) => {
-    await crxAuthorization(req);
+    const userId = await crxAuthorization(req);
     const body: {
         selected: string[],
         userId: string
     } = await req.json();
-    const {userId, selected} = body;
+    const {selected} = body;
     
     selected.forEach(async processId => {
         await prisma.process.delete({
