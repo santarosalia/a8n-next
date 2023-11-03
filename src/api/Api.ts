@@ -32,6 +32,15 @@ export const getRefreshToken = async () => {
     return result;
 }
 
+export const refreshAuth = async () => {
+    const res = await fetch(`/api/auth/refreshtoken`, {
+        method : 'PUT'
+    });
+    if (!res.ok) return null;
+    const result: RequestCookie = await res.json();
+    return result;
+}
+
 export const deleteAccessToken = async () => {
     await fetch('/api/auth/accesstoken', {
         method : 'DELETE'

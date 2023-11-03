@@ -1,4 +1,4 @@
-import { deleteAccessToken, getAccessToken, getRefreshToken } from "@/api/Api";
+import { deleteAccessToken, getAccessToken, getRefreshToken, refreshAuth } from "@/api/Api";
 import { decodeJwt } from "@/app/lib/jwt";
 
 export const authorization = async () => {
@@ -7,10 +7,11 @@ export const authorization = async () => {
         const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
         return user;
     } else {
-        const accessToken = await getRefreshToken();
-        if (accessToken) {
-            const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
-            return user;
+        const refreshToken = await getRefreshToken();
+        if (refreshToken) {
+           const accessToken = await refreshAuth();
+           const user = JSON.parse(JSON.stringify(decodeJwt(accessToken?.value!)));
+           return user;
         }
     }
     await deleteAccessToken();
