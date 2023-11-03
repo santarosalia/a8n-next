@@ -48,7 +48,6 @@ export const getPosts = async (category:string, page: number) => {
 
 export const isExistsCrx = async () => {
     if (!chrome || !chrome.runtime) return false;
-    console.log(chrome.runtime)
     const result: boolean = await sendMessageToCrx(CRX_COMMAND.CMD_CHECK_LUNATIC_MONSTER);
     return result;
 }

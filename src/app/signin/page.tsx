@@ -29,9 +29,7 @@ export default () => {
         if (accessToken) {
             const user = JSON.parse(JSON.stringify(decodeJwt(accessToken)));
             dispatch(setUser(user));
-            
             const isExists = await isExistsCrx();
-            console.log(isExists)
             if (isExists) {
                 await signInCrx(user);
             }
