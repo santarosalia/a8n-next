@@ -4,19 +4,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, { params }: {
     params: {
-        userId: string
+        processId: string
     }
 }) => {
     const userId = await crxAuthorization(req);
-    if (userId !== params.userId) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
-    const process = await prisma.process.findMany({
+    const processId = params.processId;
+    const process = await prisma.process.findUnique({
         where : {
-            userId : params.userId,
-        },
-        select : {
-            id : true,
-            name : true
+            id : processId
         }
     });
+    if (userId !== process?.userId) return new NextResponse(JSON.stringify({error : 'No Auth'}), {status : 401});
     return new NextResponse(JSON.stringify(process));
 }

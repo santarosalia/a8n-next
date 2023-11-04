@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default ({process}: {process: ProcessInfo}) => {
-    const [showCircle, setShowCircle] = useState(false);
+    const [showButton, setShowButton] = useState(false);
     const dispatch = useAppDispatch();
     const selected = useAppSelector(getSelected);
     const router = useRouter();
@@ -25,10 +25,10 @@ export default ({process}: {process: ProcessInfo}) => {
 
     return (
         <Box sx={{flex : '0 0 33.333%', padding: 1}}>
-            <Card variant="outlined"  onMouseOver={() => setShowCircle(true)} onMouseOut={() => setShowCircle(false)} {...(selected[process.id] && {sx : {backgroundColor : purple[100]}})}>
-                <Button fullWidth sx={{opacity : 0, transition : '0.5s'}} {...(showCircle && {sx : {opacity : 1, transition : '0.5s'}})} onClick={() => cardOnClick(process)}>Select</Button>
+            <Card variant="outlined"  onMouseOver={() => setShowButton(true)} onMouseOut={() => setShowButton(false)} {...(selected[process.id] && {sx : {backgroundColor : purple[100]}})}>
+                <Button fullWidth sx={{opacity : 0, transition : '0.5s'}} {...(showButton && {sx : {opacity : 1, transition : '0.5s'}})} onClick={() => cardOnClick(process)}>Select</Button>
                 <Typography sx={{marginX : 2}}>{process.name}</Typography>
-                <Button fullWidth sx={{opacity : 0, transition : '0.5s'}} {...(showCircle && {sx : {opacity : 1, transition : '0.5s'}})} onClick={() => showDetail(process)}>Detail</Button>
+                <Button fullWidth sx={{opacity : 0, transition : '0.5s'}} {...(showButton && {sx : {opacity : 1, transition : '0.5s'}})} onClick={() => showDetail(process)}>Detail</Button>
             </Card>
         </Box>
     )

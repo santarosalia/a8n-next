@@ -2,7 +2,6 @@
 import { Box, Container, List, MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
-import { fetchProcess } from "./fetch";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setProcessInfos } from "@/redux/slices/process";
 import { SideMenuItem } from "@/components/styled";
@@ -33,12 +32,6 @@ export default ({children}: { children: ReactNode }) => {
             }
         }
     ]
-    const user = useAppSelector(getUser);
-    if (user) {
-        fetchProcess(user.id!).then(result => {
-            dispatch(setProcessInfos(result));
-        });
-    }
     return (
         <Container maxWidth='lg' sx={{mt : {md : 10, xs : 5}}}>
             <Box display={'flex'} height={'100vh'} sx={{flexDirection : { md : 'row', xs : 'column'}}}>

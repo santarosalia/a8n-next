@@ -3,15 +3,15 @@ import { RootState } from "../store";
 import { ExecuteMessage, ProcessInfo } from "@/interface/Interface";
 
 type InitialState = {
-    process: ExecuteMessage | null
+    action: ExecuteMessage | null
     processInfos: ProcessInfo[],
     selected: {
       [key: string] : boolean
-    }
+    },
 };
 
 const initialState: InitialState = {
-    process : null,
+    action : null,
     processInfos : [],
     selected : {}
 };
@@ -19,8 +19,8 @@ const slice = createSlice({
   name: "process",
   initialState,
   reducers: {
-    setProcess: (state, action) => {
-      state.process = action.payload;
+    setAction: (state, action) => {
+      state.action = action.payload;
     },
     setProcessInfos: (state, action) => {
       state.processInfos = action.payload;
@@ -32,7 +32,7 @@ const slice = createSlice({
 });
 
 export default slice;
-export const { setProcess, setProcessInfos, setSelected } = slice.actions;
-export const getProcess = (state: RootState) => state.process.process;
+export const { setAction, setProcessInfos, setSelected } = slice.actions;
+export const getAction = (state: RootState) => state.process.action;
 export const getProcessInfos = (state: RootState) => state.process.processInfos;
 export const getSelected = (state: RootState) => state.process.selected;

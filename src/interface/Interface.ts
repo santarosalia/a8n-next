@@ -54,7 +54,7 @@ export interface DetailPrice {
     desc: string
 }
 
-interface UserSession {
+export interface UserInfo {
     accessToken: string,
     createdAt: string,
     email: string,
@@ -167,4 +167,10 @@ export interface ExecuteMessage {
 export interface ProcessInfo {
     id: string,
     name: string
+}
+
+export interface ProcessDetail extends ProcessInfo {
+    data: string | ExecuteMessage[]
+    createdAt: string
+    updatedAt: string
 }

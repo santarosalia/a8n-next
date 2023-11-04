@@ -1,5 +1,5 @@
 import { CRX_COMMAND, CRX_RECEIVER, EXTENSION_ID } from "@/constants/Constants";
-import { Post } from "@/interface/Interface";
+import { Post, ProcessDetail, ProcessInfo } from "@/interface/Interface";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export const getAccessToken = async () => {
@@ -74,4 +74,23 @@ export const sendMessageToCrx = async (command: CRX_COMMAND, payload?: any) => {
         command : command,
         payload : payload
     });
+}
+
+
+export const fetchProcesseInfos = async () => {
+    const res = await fetch(`/api/process`, {
+        method : 'GET'
+    });
+    const result = await res.json();
+    return result as ProcessInfo[];
+}
+
+export const fetchProcessDetail = async (processId: string) => {
+    const res = await fetch(`/api/process/${processId}`, {
+        method : 'GET'
+    });
+    if (!res.ok) return null;
+    const result: ProcessDetail = await res.json();
+    result.data = JSON.parse(result.data as string);
+    return result;
 }

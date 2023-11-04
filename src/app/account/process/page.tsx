@@ -1,12 +1,14 @@
 'use client'
 import { useAppSelector } from "@/redux/hooks";
-import { getProcessInfos, getSelected, setSelected } from "@/redux/slices/process";
-import { Box, Button, Card, CardContent, Icon, IconButton, Typography } from "@mui/material"
+import { getProcessInfos, getSelected, setProcessInfos, setSelected } from "@/redux/slices/process";
+import { Box, Button } from "@mui/material"
 import Process from "./Process";
 import { Delete } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/redux/slices/user";
+import { useEffect } from "react";
+import { fetchProcesseInfos } from "@/api/Api";
 
 export default () => {
     const router = useRouter();
@@ -29,6 +31,12 @@ export default () => {
             dispatch(setSelected({}));
         }
     }
+    useEffect(() => {
+        fetchProcesseInfos().then(result => {
+            dispatch(setProcessInfos(result));
+        })
+
+    });
     return (
         <Box>
             <Box marginX={2}>

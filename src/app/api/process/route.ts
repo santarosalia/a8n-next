@@ -3,15 +3,15 @@ import { getMaxProcessCount } from "./func";
 import { NextRequest, NextResponse } from "next/server";
 import { crxAuthorization } from "@/api/Function";
 
-export const POST = async (req: NextRequest) => {
+export const GET = async (req: NextRequest) => {
     const userId = await crxAuthorization(req);
-    const body = await req.json();
-    const id = body.id;
-
-    const process = await prisma.process.findUnique({
+    const process = await prisma.process.findMany({
         where : {
-            id : id,
-            userId : userId,
+            userId : userId
+        },
+        select : {
+            id : true,
+            name : true
         }
     });
     return new NextResponse(JSON.stringify(process));
@@ -21,7 +21,6 @@ export const PUT = async (req: NextRequest) => {
     const body: {
         name: string,
         data: string,
-        userId: string
     } = await req.json();
     const name = body.name;
     const data = body.data;
