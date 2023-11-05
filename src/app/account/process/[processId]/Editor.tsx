@@ -1,13 +1,16 @@
-import { ExecuteMessage } from "@/interface/Interface"
-import { Box } from "@mui/material"
-import Action from "./Action"
+import { useAppSelector } from "@/redux/hooks";
+import { getAction } from "@/redux/slices/process";
+import { Box, Typography } from "@mui/material"
+import { purple } from "@mui/material/colors";
 
-export default ({ data }: { data: ExecuteMessage[]}) => {
+export default () => {
+    const action = useAppSelector(getAction);
+    const params = action?.object.parameter;
+    console.log(params)
     return (
-        <Box display={'flex'} flexWrap={'wrap'}>
-            {data.map((msg, i) => {
-                return <Action key={i} msg={msg}/>
-            })}
+        <Box position={'fixed'} borderRadius={'5px 5px 0 0'} bottom={0} left={'50% - 400px'} height={200} width={'400px'} sx={{backgroundColor : purple[50]}}>
+            <Typography>
+            </Typography>
         </Box>
     )
 }
