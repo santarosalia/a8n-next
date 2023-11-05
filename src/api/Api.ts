@@ -69,15 +69,11 @@ export const signInCrx = async () => {
 }
 
 export const sendMessageToCrx = async (command: CRX_COMMAND, payload?: any) => {
-    try {
-        return await chrome.runtime.sendMessage(EXTENSION_ID, {
-            receiver : CRX_RECEIVER.SERVICE_WORKER,
-            command : command,
-            payload : payload
-        });
-    } catch {
-        return false;
-    }
+    return await chrome.runtime.sendMessage(EXTENSION_ID, {
+        receiver : CRX_RECEIVER.SERVICE_WORKER,
+        command : command,
+        payload : payload
+    });
 }
 
 

@@ -29,11 +29,12 @@ export default () => {
         if (accessToken) {
             const user = JSON.parse(JSON.stringify(decodeJwt(accessToken)));
             dispatch(setUser(user));
-            const isExists = await isExistsCrx();
-            if (isExists) {
-                await signInCrx();
+            try {
+                const isExists = await isExistsCrx();
+                if (isExists) await signInCrx(); 
+            } finally {
+                router.back();
             }
-            router.back();
         }
     }
     return (
