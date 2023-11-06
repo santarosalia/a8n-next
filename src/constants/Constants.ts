@@ -101,3 +101,16 @@ export enum CRX_COMMAND {
     CMD_CHECK_LUNATIC_MONSTER = 'CMD_CHECK_LUNATIC_MONSTER',
     CMD_SIGN_IN_LUNATIC_MONSTER = 'CMD_SIGN_IN_LUNATIC_MONSTER'
 }
+
+export const EDITOR_KEY = {
+    url : 'URL',
+    locatorType : '로케이터 타입',
+    locator : '로케이터',
+    text : '텍스트',
+}
+export enum EditorKey {
+    url = 'url',
+    locatorType = 'locatorType',
+    locator = 'locator',
+    text = 'text'
+}

@@ -30,10 +30,14 @@ export default () => {
         }
     };
     useEffect(() => {
-        authorization().then(user => {
+        const auth = async () => {
+            const user = await authorization();
             dispatch(setUser(user));
             dispatch(setIsLoading(false));
-        });
+        }
+        auth();
+        const interval = setInterval(auth, 59 * 60 * 1000);
+        return () => clearInterval(interval);
     }, []);
 
     return (

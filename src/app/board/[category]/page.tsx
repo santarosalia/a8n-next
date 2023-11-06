@@ -3,7 +3,6 @@ import { Box, Button, ButtonGroup, Divider, List } from "@mui/material"
 import Pagination from "./Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import Posts from "./Posts";
-import { setIsOpenSigninDialog } from "@/redux/slices/dialog";
 import { Create } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { getPosts } from "@/api/Api";

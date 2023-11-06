@@ -1,5 +1,5 @@
 'use client'
-import {Button, Container} from '@mui/material';
+import { Container} from '@mui/material';
 import Section1 from './Section1';
 import Section2 from './Section2';
 
@@ -9,7 +9,5 @@ export default () => {
       <Section1></Section1>
       <Section2></Section2>
     </Container>
-  
-  
   )
 }

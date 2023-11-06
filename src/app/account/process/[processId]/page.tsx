@@ -25,7 +25,6 @@ export default ({ params }: { params: { processId: string }}) => {
                 {processDetail?.name}
             </Typography>
             {processDetail ? <Actions data={processDetail?.data as ExecuteMessage[]}/> : null}
-            <Editor/>
         </Box>
     )
 }

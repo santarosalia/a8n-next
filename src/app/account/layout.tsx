@@ -1,11 +1,13 @@
 'use client'
 import { Box, Container, List, MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setProcessInfos } from "@/redux/slices/process";
 import { SideMenuItem } from "@/components/styled";
-import { getUser } from "@/redux/slices/user";
+import { fetchProcesseInfos } from "@/api/Api";
+import Editor from "./process/[processId]/Editor";
+import { setIsOpenEditor } from "@/redux/slices/dialog";
 
 export default ({children}: { children: ReactNode }) => {
 
@@ -32,18 +34,28 @@ export default ({children}: { children: ReactNode }) => {
             }
         }
     ]
+
+    useEffect(() => {
+        fetchProcesseInfos().then(result => {
+            dispatch(setProcessInfos(result));
+        });
+        dispatch(setIsOpenEditor(false));
+    }, []);
     return (
-        <Container maxWidth='lg' sx={{mt : {md : 10, xs : 5}}}>
-            <Box display={'flex'} height={'100vh'} sx={{flexDirection : { md : 'row', xs : 'column'}}}>
-                <Box flex={1}>
-                    <List sx={{display : 'flex', flexDirection : {md : 'column', xs : 'row'}}}>
-                        {accountMenus.map((menu, i) => {
-                            return <SideMenuItem key={i} onClick={menu.onClick}>{menu.name}</SideMenuItem>
-                        })}
-                    </List>
+        <Box justifyContent={'center'} display={'flex'}>
+            <Container maxWidth='lg' sx={{mt : {md : 10, xs : 5}}} onClick={() => dispatch(setIsOpenEditor(false))}>
+                <Box display={'flex'} height={'100vh'} sx={{flexDirection : { md : 'row', xs : 'column'}}}>
+                    <Box flex={1}>
+                        <List sx={{display : 'flex', flexDirection : {md : 'column', xs : 'row'}}}>
+                            {accountMenus.map((menu, i) => {
+                                return <SideMenuItem key={i} onClick={menu.onClick}>{menu.name}</SideMenuItem>
+                            })}
+                        </List>
+                    </Box>
+                    <Box flex={10} paddingX={3}>{children}</Box>
                 </Box>
-                <Box flex={10} paddingX={3}>{children}</Box>
-            </Box>
-        </Container>
+            </Container>
+            <Editor/>
+        </Box>
     )
 }

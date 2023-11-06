@@ -2,22 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 type InitialState = {
-  isOpenSigninDialog: boolean
+  isOpenEditor: boolean
 };
 
 const initialState: InitialState = {
-  isOpenSigninDialog: false
+  isOpenEditor: false
 };
 const slice = createSlice({
   name: "dialog",
   initialState,
   reducers: {
-    setIsOpenSigninDialog: (state, action) => {
-      state.isOpenSigninDialog = action.payload as boolean;
+    setIsOpenEditor: (state, action) => {
+      state.isOpenEditor = action.payload as boolean;
     }
   },
 });
 
 export default slice;
-export const { setIsOpenSigninDialog } = slice.actions;
-export const getIsOpenSigninDialog =  (state: RootState) => state.dialog.isOpenSigninDialog;
+export const { setIsOpenEditor } = slice.actions;
+export const getIsOpenEditor =  (state: RootState) => state.dialog.isOpenEditor;

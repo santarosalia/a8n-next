@@ -7,8 +7,6 @@ import { Delete } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/redux/slices/user";
-import { useEffect } from "react";
-import { fetchProcesseInfos } from "@/api/Api";
 
 export default () => {
     const router = useRouter();
@@ -31,12 +29,6 @@ export default () => {
             dispatch(setSelected({}));
         }
     }
-    useEffect(() => {
-        fetchProcesseInfos().then(result => {
-            dispatch(setProcessInfos(result));
-        })
-
-    });
     return (
         <Box>
             <Box marginX={2}>
