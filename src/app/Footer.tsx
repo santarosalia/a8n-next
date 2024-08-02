@@ -40,8 +40,8 @@ export default () => {
         return () => clearInterval(interval);
     }, []);
     return (
-        <AppBar position="fixed" variant="elevation" sx={{top: 'auto', bottom: '0', backgroundColor: 'black'}}>
-            <Container maxWidth="xl">
+        <AppBar position="sticky" variant="elevation" sx={{top: 'auto', bottom: '0', backgroundColor: 'black', maxWidth: 'sm', margin: '0 auto'}}>
+            <Container maxWidth="sm">
                 <Toolbar disableGutters>
                     <Box display={'flex'} alignItems={'center'} width={'100%'} justifyContent={'space-between'}>
                         <Button variant="text" color="inherit">
