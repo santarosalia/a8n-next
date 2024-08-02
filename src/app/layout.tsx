@@ -30,7 +30,7 @@ export default function RootLayout({
     <html>
       <head>
       </head>
-      <body className={notoSansKr.className}>
+      <body className={notoSansKr.className} style={{backgroundColor: 'black'}}>
         <Provider>
           {children}
           <Footer/>
