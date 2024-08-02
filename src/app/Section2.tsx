@@ -1,31 +1,28 @@
-import { Box, Typography } from "@mui/material"
-import { yellow } from "@mui/material/colors"
+import { Box, Container, Typography } from "@mui/material"
+import { grey, yellow } from "@mui/material/colors"
 
 export default () => {
     return (
-        <>
-        <Box 
-        height={'100vh'} 
-        padding={'20vw'} 
-        display={'flex'} 
-        sx={{
-            flexDirection : {
-                xs : 'column',
-                md : 'row'
-            },
-            backgroundColor : yellow[100]
-        }}>
-            <Box flex={1}>
-                <Typography variant="h4">
-                    Section2
-                </Typography>
-                <Typography variant="subtitle2">
-                Section 2 Subtitle
-                </Typography>
-                Contents
+        <Container>
+            <Box color={grey[100]}
+            mt={1}
+            height={'200vh'} 
+            display={'flex'} 
+            >
+                <Container component={'div'}>
+                    <Typography variant="h4" display={'flex'} justifyContent={'space-between'}>
+                        <span>😍</span>
+                        <span>img</span>
+                    </Typography>
+                    <Typography variant="subtitle2" display={"flex"} justifyContent={'end'}>
+                    id
+                    </Typography>
+                    <Typography variant="body1">
+                        Contents
+                    </Typography>
+                </Container>
+                
             </Box>
-            
-        </Box>
-        </>
+        </Container>
     )
 }

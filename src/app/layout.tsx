@@ -1,9 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Noto_Sans_KR } from 'next/font/google'
-import Header from './Header';
 import Provider from '@/provider/Provider';
 import Footer from './Footer';
+import { css } from '@emotion/react';
+import { color } from '@mui/system';
+import { colors } from '@mui/material';
 
 const notoSansKr = Noto_Sans_KR({ 
   subsets : ['latin'],
@@ -27,11 +29,9 @@ export default function RootLayout({
   return (
     <html>
       <head>
-        <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
       </head>
       <body className={notoSansKr.className}>
         <Provider>
-          <Header/>
           {children}
           <Footer/>
         </Provider>

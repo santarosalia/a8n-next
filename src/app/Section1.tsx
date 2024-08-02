@@ -1,46 +1,38 @@
-import { Box, Button, Typography } from "@mui/material"
-import { green } from "@mui/material/colors"
+import { Box, Button, Card, colors, Container, Divider, Paper, Typography } from "@mui/material"
+import { green, grey } from "@mui/material/colors"
+import Image from "next/image"
 
 export default () => {
     return (
-        <>
-        {/* <Box height={'100vh'} padding={20} sx={{display : {xs : 'none', md : 'flex'}}}> */}
-        <Box height={'100vh'} padding={'20vw'} display={'flex'} sx={{flexDirection : { xs:'column', md : 'row' }, display : 'flex'}}>
-            <Box flex={1}>
-                <Typography variant="h4">
-                    Easiest Chromium Automation
-                </Typography>
-                <Typography variant="subtitle2">
-                Lunatic Monster helps with routine
-                </Typography>
-            </Box>
-            <Box flex={1} display={'flex'} flexDirection={'column'}>
-                <Box 
-                component={'img'}
-                margin={'auto'}
-                sx={{
-                    height : 250,
-                    width : 250,
-                    minWidth : 250
-                }}
-                src={'/hello.png'}
-                >
+        <Container>
+            <Box
+                height={'110px'}
+                display={'flex'}
+                flexDirection={'column'}
+                color={colors.grey[100]}
+                alignItems={'center'}
+            >
+            <Image src={'/rgb.gif'} width={50} height={50} alt="rgb"></Image>
+            <Container>
+                <Typography fontSize={12}>id</Typography>
+                <Typography fontSize={12}>오늘의 감정?</Typography>
+                <Box display={"flex"} justifyContent={'space-around'}>
+                    <Button color="inherit">
+                        <Typography fontSize={13}>❤️‍🔥</Typography>
+                    </Button>
+                    <Button color="inherit">
+                        <Typography fontSize={13}>🙌</Typography>
+                    </Button>
+                    <Button color="inherit">
+                        <Typography fontSize={13}>🦄</Typography>
+                    </Button>
+                    <Button color="inherit">
+                        <Typography fontSize={13}>💩</Typography>
+                    </Button>
                 </Box>
-                <Button 
-                href={'/plans'}
-                className="bg-green-100" 
-                size="large"  
-                variant="contained" 
-                sx={{
-                    color : 'green',
-                    ":hover" : {backgroundColor : green[200]},
-                    backgroundColor : green[100]
-                    }}
-                >
-                        Get Started
-                </Button>
+            </Container>
             </Box>
-        </Box>
-        </>
+            <Divider variant="middle" color={grey[50]}></Divider>
+        </Container>
     )
 }

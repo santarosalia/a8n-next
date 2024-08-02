@@ -4,4 +4,8 @@
 
 * {
   text-transform: none !important;
+  
+}
+*::-webkit-scrollbar {
+  display: none;
 }
