@@ -23,7 +23,7 @@ const items = l.map(i => {
 })
 export default () => {
     return (
-        <Container>
+        <Container sx={{overflow:'none'}}>
             <Box 
                 color={grey[100]}
                 mt={1}
